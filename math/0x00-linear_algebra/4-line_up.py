@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""  Function to return the add between two arrays"""
+
+
 def add_arrays(arr1, arr2):
     """ This function returns the add between two arrays"""
     if arr1 and arr2:

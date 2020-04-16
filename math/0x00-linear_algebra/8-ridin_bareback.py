@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+""" Function for matrix multiplication"""
+
+
 def mat_mul(mat1, mat2):
     """This funtion return the answer of a matrix multiplication"""
     if mat1 and mat2:

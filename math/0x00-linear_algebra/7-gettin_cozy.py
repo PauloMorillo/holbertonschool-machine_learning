@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+""" Funtion for concatenate 2 matrix"""
+
+
 def cat_matrices2D(mat1, mat2, axis=0):
     """ This funtion return a concatenated matrix"""
     if mat1 and mat2:

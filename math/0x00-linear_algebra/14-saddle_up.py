@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""Function for multiplication of 2 matrix with numpy"""
+
+
 def np_matmul(mat1, mat2):
     """ This function returns the multiplication between two matrix"""
     import numpy as np

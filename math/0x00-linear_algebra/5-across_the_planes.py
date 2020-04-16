@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+""" Function to add 2 matrix"""
+
+
 def add_matrices2D(mat1, mat2):
     """ This function returns the add between two matrices"""
     if mat1 and mat2:

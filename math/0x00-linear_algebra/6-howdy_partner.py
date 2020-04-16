@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+""" Function to concatanate two arrays"""
+
+
 def cat_arrays(arr1, arr2):
     """ This function returns the concatanation of two arrays"""
     if arr1 and arr2:
