@@ -1,3 +1,6 @@
+""" Module with function matrix shape"""
+
+
 def matrix_shape(matrix):
     """ This function return the size of a matrix"""
     size = []
