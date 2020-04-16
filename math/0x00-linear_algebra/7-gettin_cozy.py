@@ -10,7 +10,6 @@ def cat_matrices2D(mat1, mat2, axis=0):
 
     if axis is 0:
         for rows in mat2:
-            print(len(rows), len(mat1[0]))
             if len(rows) == len(mat1[0]):
                 new_matrix.append(rows)
             else:
