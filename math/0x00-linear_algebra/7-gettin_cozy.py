@@ -7,6 +7,7 @@ def cat_matrices2D(mat1, mat2, axis=0):
     new_matrix = []
     mat2n = []
     mat1n = []
+
     for rows in mat1:
         new_cols = []
         for cols in rows:
@@ -32,7 +33,7 @@ def cat_matrices2D(mat1, mat2, axis=0):
     if axis is 1:
         for pos in range(len(mat2)):
             if len(new_matrix) == len(mat2n):
-                new_matrix[pos].append(mat2n[pos][0])
+                new_matrix[pos].extend(mat2n[pos])
             else:
                 return None
         return new_matrix
