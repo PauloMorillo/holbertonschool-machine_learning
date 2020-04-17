@@ -25,13 +25,12 @@ def cat_matrices2D(mat1, mat2, axis=0):
         return new_matrix
 
     if axis is 1:
-        if len(new_matrix[0]) == len(mat2):
-            for pos in range(len(mat2n)):
-                new_matrix[pos].append(mat2n[pos][0])
+        if len(new_matrix) == len(mat2):
+            for pos in range(len(mat2)):
+                new_matrix[pos].append(mat2[pos][0])
         else:
             return None
         return new_matrix
-    return None
 
 
 """
