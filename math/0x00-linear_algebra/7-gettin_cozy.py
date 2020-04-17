@@ -4,12 +4,20 @@
 
 def cat_matrices2D(mat1, mat2, axis=0):
     """ This funtion return a concatenated matrix"""
-    new_matrix = mat1.copy()
+    new_matrix = []
     mat1n = mat1.copy()
     mat2n = mat2.copy()
+    for rows in mat1:
+        new_cols = []
+        for cols in rows:
+            new_cols = new_cols + [cols]
+        new_matrix = new_matrix + [new_cols]
+
+    # print(new_matrix)
 
     if axis is 0:
-        for rows in mat2:
+        # print("por aqui pase")
+        for rows in mat2n:
             if len(rows) == len(mat1[0]):
                 new_matrix.append(rows)
             else:
@@ -17,7 +25,7 @@ def cat_matrices2D(mat1, mat2, axis=0):
         return new_matrix
 
     if axis is 1:
-        if len(new_matrix[0]) == len(mat2n):
+        if len(new_matrix[0]) == len(mat2):
             for pos in range(len(mat2n)):
                 new_matrix[pos].append(mat2n[pos][0])
         else:
