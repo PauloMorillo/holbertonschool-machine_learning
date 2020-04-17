@@ -6,10 +6,12 @@ def cat_matrices2D(mat1, mat2, axis=0):
     """ This funtion return a concatenated matrix"""
     new_matrix = []
     mat2n = []
+    mat1n = []
     for rows in mat1:
         new_cols = []
         for cols in rows:
             new_cols = new_cols + [cols]
+        mat1n = mat1n + [new_cols]
         new_matrix = new_matrix + [new_cols]
 
     for rows in mat2:
@@ -22,19 +24,18 @@ def cat_matrices2D(mat1, mat2, axis=0):
 
     if axis is 0:
         # print("por aqui pase")
-        for rows in mat2n:
-            if len(rows) == len(mat1[0]):
-                new_matrix.append(rows)
-            else:
-                return None
+        # for rows in mat2n:
+        if len(mat2[0]) != len(mat1[0]):
+            return None
+        return mat1n + mat2n
 
     if axis is 1:
         for pos in range(len(mat2)):
-            if len(new_matrix) == len(mat2n) and len(mat2n[pos]) == 1:
+            if len(new_matrix) == len(mat2n):
                 new_matrix[pos].append(mat2n[pos][0])
             else:
                 return None
-    return new_matrix
+        return new_matrix
 
 
 """
