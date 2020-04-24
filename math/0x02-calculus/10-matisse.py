@@ -8,8 +8,6 @@ def poly_derivative(poly):
         poly.pop(0)
         new_list = []
         for exp in range(len(poly)):
-            print(new_list, poly)
-            print("esto es exp", exp)
             new_list = new_list + [poly[exp] * (exp + 1)]
         return new_list
     return None
