@@ -5,6 +5,8 @@
 def poly_derivative(poly):
     """ Funtion to solve polynomial derivate """
     if poly and type(poly) == list and len(poly) > 0 and type(poly[0]) == int:
+        if len(poly) == 1:
+            return [0]
         poly.pop(0)
         new_list = []
         for exp in range(len(poly)):
