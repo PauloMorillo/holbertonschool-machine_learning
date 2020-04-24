@@ -5,15 +5,17 @@
 def poly_integral(poly, C=0):
     """ Funtion solve polynomial integrals """
     if poly and type(poly) == list:
-        if len(poly) > 0 and type(C) in [int, float]:
+        if len(poly) > 0 and type(C) == int:
             ans = [C]
+            if len(poly) == 1 and poly[0] == 0:
+                return [C]
             for exp in range(len(poly)):
                 if type(poly[exp]) == int:
-                    newesc = (int(poly[exp] * (exp + 1)) / int(exp + 1))
+                    newesc = (poly[exp] * (exp + 1) / (exp + 1))
                     if (newesc % (exp + 1)) == 0:
-                        ans = ans + [(int(newesc) // int(exp + 1))]
+                        ans = ans + [(newesc // (exp + 1)).__round__()]
                     else:
-                        ans = ans + [(int(newesc) / int(exp + 1)).__round__(2)]
+                        ans = ans + [(newesc / (exp + 1))]
                 else:
                     return None
             return ans
