@@ -8,6 +8,9 @@ def poly_derivative(poly):
         poly.pop(0)
         new_list = []
         for exp in range(len(poly)):
-            new_list = new_list + [poly[exp] * (exp + 1)]
+            if type(poly[exp]) == int:
+                new_list = new_list + [poly[exp] * (exp + 1)]
+            else:
+                return None
         return new_list
     return None
