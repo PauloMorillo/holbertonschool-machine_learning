@@ -2,7 +2,13 @@
 """ This module has the class poisson """
 
 
-import math as mp
+def factorial(n):
+    """ function to do a factorial """
+    ans = 1
+    while (n >= 1):
+        ans = ans * n
+        n = n - 1
+    return ans
 
 
 class Poisson():
@@ -32,4 +38,17 @@ class Poisson():
         if k < 0:
             return 0
         e = 2.7182818285
-        return ((self.lambtha**k)*(e**(-self.lambtha)))/mp.factorial(k)
+        return ((self.lambtha**k)*(e**(-self.lambtha)))/factorial(k)
+
+    def cdf(self, k):
+        """ This method calculates the CDF """
+        if type(k) is not int:
+            k = int(k)
+
+        if k < 0:
+            return 0
+        e = 2.7182818285
+        cdf = 0
+        for k1 in range(k + 1):
+            cdf = cdf + self.pmf(k1)
+        return cdf
