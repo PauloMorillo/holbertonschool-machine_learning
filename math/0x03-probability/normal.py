@@ -39,8 +39,6 @@ class Normal():
 
     def pdf(self, x):
         """ Method to calculate the pdf """
-        if x < 0:
-            return 0
         e = 2.7182818285
         pi = 3.1415926536
         term1 = 1 / (self.stddev * ((2 * pi) ** (1 / 2)))
@@ -49,8 +47,6 @@ class Normal():
 
     def cdf(self, x):
         """ This method calculates the CDF """
-        if type(x) is not int:
-            x = int(x)
         if x < 0:
             return 0
         e = 2.7182818285
