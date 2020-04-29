@@ -33,7 +33,7 @@ class Exponential():
     def pdf(self, x):
         """ Method to calculate the pdf """
         if type(x) is not int:
-            k = int(k)
+            x = int(x)
 
         if x < 0:
             return 0
