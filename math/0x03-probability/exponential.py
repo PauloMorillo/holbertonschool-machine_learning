@@ -32,9 +32,6 @@ class Exponential():
 
     def pdf(self, x):
         """ Method to calculate the pdf """
-        if type(x) is not int:
-            x = int(x)
-
         if x < 0:
             return 0
         e = 2.7182818285
@@ -42,8 +39,6 @@ class Exponential():
 
     def cdf(self, x):
         """ This method calculates the CDF """
-        if type(x) is not int:
-            x = int(x)
         if x < 0:
             return 0
         e = 2.7182818285
