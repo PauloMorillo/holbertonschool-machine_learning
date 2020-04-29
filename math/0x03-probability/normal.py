@@ -31,12 +31,10 @@ class Normal():
 
     def z_score(self, x):
         """ Method to return the z-score """
-        print(x)
         return (x - self.mean) / self.stddev
 
     def x_value(self, z):
         """ Method returns correspond x-values for z"""
-        print(z)
         return (z * self.stddev) + self.mean
 
     def pdf(self, x):
