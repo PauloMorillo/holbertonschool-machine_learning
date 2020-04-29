@@ -2,6 +2,9 @@
 """ This module has the class poisson """
 
 
+import math as mp
+
+
 class Poisson():
     """ This class is to represent a poisson distribution """
 
@@ -20,3 +23,13 @@ class Poisson():
                 self.lambtha = float(lambtha)
             else:
                 raise ValueError('lambtha must be a positive value')
+
+    def pmf(self, k):
+        """ Method to calculate the pmf """
+        if type(k) is not int:
+            k = int(k)
+
+        if k < 0:
+            return 0
+        e = 2.7182818285
+        return ((self.lambtha**k)*(e**(-self.lambtha)))/mp.factorial(k)
