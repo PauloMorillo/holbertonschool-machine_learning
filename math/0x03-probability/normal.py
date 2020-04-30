@@ -47,12 +47,10 @@ class Normal():
 
     def cdf(self, x):
         """ This method calculates the CDF """
-        if x < 0:
-            return 0
         e = 2.7182818285
         pi = 3.1415926536
         term1 = 2 / (pi ** (1 / 2))
         x = (x - self.mean) / (self.stddev * (2 ** (1 / 2)))
         erf = term1 * (x - ((x ** 3) / 3) + ((x ** 5) / 10)
                        - ((x ** 7) / 42) + ((x ** 9) / 216))
-        return ((1 / 2) * (1 + (erf)))
+        return (1 / 2) * (1 + erf)
