@@ -13,7 +13,7 @@ class Neuron():
         if type(nx) is not int:
             raise TypeError("nx must be an integer")
         if nx < 1:
-            raise ValueError("nx must be positive")
+            raise ValueError("nx must be positive integer")
 
         self.nx = nx
         self.__W = np.random.normal(size=(1, nx))
