@@ -39,5 +39,5 @@ class Neuron():
         """ This Method calculates the forward propagation of the neuron """
         e = 2.7182818285
         x = np.matmul(self.__W, X) + self.__b
-        self.__A = 1 / (1 + (e ** (-x)))
+        self.__A = 1 / (1 + (np.exp(-x)))
         return self.__A
