@@ -13,7 +13,7 @@ class Neuron():
         if type(nx) is not int:
             raise TypeError("nx must be an integer")
         if nx < 1:
-            raise ValueError("nx must be positive integer")
+            raise ValueError("nx must be positive")
 
         self.nx = nx
         self.__W = np.random.normal(size=(1, nx))
@@ -38,6 +38,6 @@ class Neuron():
     def forward_prop(self, X):
         """ This Method calculates the forward propagation of the neuron """
         e = 2.7182818285
-        x = np.matmul(X.T, self.__W.T).T + self.__b
+        x = np.matmul(self.__W, X) + self.__b
         self.__A = 1 / (1 + (e ** (-x)))
         return self.__A
