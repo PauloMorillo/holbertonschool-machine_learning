@@ -60,7 +60,6 @@ class NeuralNetwork():
         """ This method calculates de forward propagation"""
         x = np.matmul(X.T, self.__W1.T).T + self.__b1
         self.__A1 = 1 / (1 + (np.exp(-x)))
-        print(self.__A1.T.shape, self.__W2.T.shape)
         x2 = np.matmul(self.__A1.T, self.__W2.T).T + self.__b2
         self.__A2 = 1 / (1 + (np.exp(-x2)))
         return self.__A1, self.__A2
