@@ -25,7 +25,7 @@ class DeepNeuralNetwork():
                 cols = layers[lay - 1]
             else:
                 cols = nx
-            w = np.random.randn(layers[lay], cols) * np.sqrt(2 / cols)
+            w = np.random.normal(size=(layers[lay], cols)) * np.sqrt(2 / cols)
             weights['W{}'.format(lay + 1)] = w
             weights['b{}'.format(lay + 1)] = np.zeros((layers[lay], 1))
             lay = lay + 1
