@@ -68,4 +68,4 @@ class NeuralNetwork():
         """ This method calculates cost of the model with logistic regrsion"""
         term1 = (-1 / (len(A.T)))
         costf = term1 * ((Y * (np.log(A))) + ((1 - Y) * np.log(1.0000001 - A)))
-        return costf.sum()
+        return np.sum(costf)
