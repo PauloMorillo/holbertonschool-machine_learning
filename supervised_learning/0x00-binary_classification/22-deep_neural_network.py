@@ -86,9 +86,19 @@ class DeepNeuralNetwork():
             db = np.sum(dz, axis=1, keepdims=True) / (len(Y.T))
             fix1 = (db * alpha)
             fix2 = (dw * alpha)
-            self.__weights['b{}'.format(lay)] = w['b{}'.format(lay)] - fix1
-            self.__weights['W{}'.format(lay)] = w['W{}'.format(lay)] - fix2
+            if lay < self.__L:
+                self.__weights['b{}'.format(lay + 1)] = blast
+                self.__weights['W{}'.format(lay + 1)] = wlast
+                blast = w['b{}'.format(lay)] - fix1
+                wlast = w['W{}'.format(lay)] - fix2
+
+            else:
+                blast = w['b{}'.format(lay)] - fix1
+                wlast = w['W{}'.format(lay)] - fix2
             lay = lay - 1
+
+        self.__weights['b{}'.format(lay + 1)] = blast
+        self.__weights['W{}'.format(lay + 1)] = wlast
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """ This method trains the DNN """
