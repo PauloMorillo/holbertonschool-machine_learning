@@ -86,20 +86,16 @@ class DeepNeuralNetwork():
             db = np.sum(dz, axis=1, keepdims=True) / (len(Y.T))
             fix1 = (db * alpha)
             fix2 = (dw * alpha)
-            self.__weights['b{}'.format(lay)] = w['b{}'.format(lay)] - fix1
-            self.__weights['W{}'.format(lay)] = w['W{}'.format(lay)] - fix2
+            if lay < self.__L:
+                self.__weights['b{}'.format(lay + 1)] = blast
+                self.__weights['W{}'.format(lay + 1)] = wlast
+                blast = w['b{}'.format(lay)] - fix1
+                wlast = w['W{}'.format(lay)] - fix2
+
+            else:
+                blast = w['b{}'.format(lay)] - fix1
+                wlast = w['W{}'.format(lay)] - fix2
             lay = lay - 1
 
-
-"""
-        dz2 = A2 - Y
-        dw2 = np.matmul(dz2, A1.T) / (len(Y.T))
-        db2 = np.sum(dz2, axis=1, keepdims=True) / (len(Y.T))
-        dz1 = np.matmul(self.__W2.T, dz2) * (A1 * (1 - A1))
-        dw1 = np.matmul(dz1, X.T) / (len(A1.T))
-        db1 = np.sum(dz1, axis=1, keepdims=True) / (len(Y.T))
-        self.__b1 = self.__b1 - ((db1) * alpha)
-        self.__W1 = self.__W1 - (alpha * dw1)
-        self.__b2 = self.__b2 - ((db2) * alpha)
-        self.__W2 = self.__W2 - (alpha * dw2)
-"""
+        self.__weights['b{}'.format(lay + 1)] = blast
+        self.__weights['W{}'.format(lay + 1)] = wlast
