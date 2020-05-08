@@ -20,7 +20,7 @@ class DeepNeuralNetwork():
         lay = 0
         while lay < len(layers):
             if layers[lay] < 1:
-                raise ValueError("layers must be a list of positive integers")
+                raise TypeError("layers must be a list of positive integers")
             if lay is not 0:
                 cols = layers[lay - 1]
             else:
