@@ -57,7 +57,7 @@ class Neuron():
     def gradient_descent(self, X, Y, A, alpha=0.05):
         """This method Calculates one pass of gradient descent on the neuron"""
         dz = A - Y
-        dw = np.matmul(dz, X.T)/(len(A.T))
+        dw = np.matmul(dz, X.T) / (len(A.T))
         db = np.sum((dz)) / (len(A.T))
         self.__b = self.__b - ((db) * alpha)
         self.__W = self.__W - (alpha * dw)
@@ -78,19 +78,24 @@ class Neuron():
                 raise TypeError("step must be an integer")
             if step < 1 or step > iterations:
                 raise ValueError("step must be positive and <= iterations")
-
-        for i in range(iterations):
-            A = self.forward_prop(X)
-            self.gradient_descent(X, Y, A, alpha)
+        allcost = []
+        xcost = []
+        for i in range(iterations + 1):
             A, c = self.evaluate(X, Y)
             if verbose:
-                if i == step or i == 0 or i == iterations:
+                if i % step == 0 or i == 0 or i == iterations:
                     print("Cost after {} iterations: {}".format(i, c))
             if graph:
-                if i == step or i == 0 or i == iterations:
-                    plt.xlabel('iteration')
-                    plt.ylabel('cost')
-                    plt.title('Training Cost')
-                    plt.plot(c, 'b')
-                    plt.show()
+                if i % step == 0 or i == 0 or i == iterations:
+                    allcost = allcost + [c]
+                    xcost = xcost + [i]
+            A = self.forward_prop(X)
+            self.gradient_descent(X, Y, A, alpha)
+
+        if graph:
+            plt.xlabel('iteration')
+            plt.ylabel('cost')
+            plt.title('Training Cost')
+            plt.plot(xcost, allcost, 'b')
+            plt.show()
         return (self.evaluate(X, Y))
