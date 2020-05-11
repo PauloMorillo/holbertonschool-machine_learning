@@ -55,4 +55,3 @@ class NeuralNetwork():
     def A2(self):
         """ This is a getter for W1"""
         return self.__A2
-
