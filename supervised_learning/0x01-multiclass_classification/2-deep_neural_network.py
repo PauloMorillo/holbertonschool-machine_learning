@@ -155,4 +155,5 @@ class DeepNeuralNetwork():
             return None
         with open(filename, 'rb') as f:
             dnn = pickle.load(f)
+        f.close()
         return dnn
