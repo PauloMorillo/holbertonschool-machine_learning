@@ -8,8 +8,8 @@ def one_hot_decode(one_hot):
     """
     This method decode a one-hot matrix into a numerical label
     """
-    decoding = np.zeros(one_hot.shape[0])
     try:
+        decoding = np.zeros(one_hot.shape[0])
         rowspos = 0
         for row in one_hot:
             colspos = 0
