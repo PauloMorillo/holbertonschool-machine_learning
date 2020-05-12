@@ -8,4 +8,6 @@ def one_hot_decode(one_hot):
     """
     This method decode a one-hot matrix into a numerical label
     """
-    return np.argmax(one_hot, axis=0)
+    if one_hot and len(one_hot) > 1:
+        return np.argmax(one_hot, axis=0)
+    return None
