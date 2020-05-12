@@ -66,8 +66,8 @@ class DeepNeuralNetwork():
         """ This method calculates cost of the DDN model with logistic reg"""
         term1 = (1 / (len(A.T)))
         term2 = (1 - Y) * (np.log(1.0000001 - A))
-        costf = -((Y * (np.log(A))) + term2)
-        return np.sum(costf) / len(A.T)
+        costf = -((Y * (np.log(A))) + term2) / A.shape[1]
+        return np.sum(costf)
 
     def evaluate(self, X, Y):
         """ This method evaluates the DNN's predictions """
@@ -154,7 +154,6 @@ class DeepNeuralNetwork():
         """
         if not os.path.exists(filename):
             return None
-        f = open(filename, 'rb')
-        dnn = pickle.load(f)
-        f.close()
+        with open(filename, 'rb') as f:
+            dnn = pickle.load(f)
         return dnn
