@@ -10,11 +10,6 @@ def one_hot_decode(one_hot):
     """
     if one_hot is None or type(one_hot) is not np.ndarray:
         return None
-    if np.where(one_hot < 0) or if np.where(one_hot > 1):
-        return None
-    if np.where(one_hot > 0 and one_hot < 1):
-        return None
-    """
     decoding = np.zeros(one_hot.shape[0])
     rowspos = 0
     for row in one_hot:
@@ -25,4 +20,3 @@ def one_hot_decode(one_hot):
             colspos = colspos + 1
         rowspos = rowspos + 1
     return decoding.astype(int)
-    """
