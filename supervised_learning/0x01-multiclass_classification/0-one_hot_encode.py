@@ -12,6 +12,6 @@ def one_hot_encode(Y, classes):
         encoding_y = np.zeros((classes, len(Y)))
         for i in range(len(Y)):
             encoding_y[Y[i]][i] = 1
-    except:
+    except E:
         return None
     return encoding_y
