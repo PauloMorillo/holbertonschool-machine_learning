@@ -16,6 +16,4 @@ def one_hot_encode(Y, classes):
     for i in range(len(Y)):
         if encoding_y[Y[i]][i]:
             encoding_y[Y[i]][i] = 1
-        else:
-            return None
     return encoding_y
