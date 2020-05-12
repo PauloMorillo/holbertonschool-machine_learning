@@ -140,7 +140,6 @@ class DeepNeuralNetwork():
             plt.show()
         return (self.evaluate(X, Y))
 
-
     def save(self, filename):
         """
          This method saves the instance object to a file in pickle
