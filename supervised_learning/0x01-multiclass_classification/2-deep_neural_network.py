@@ -149,11 +149,10 @@ class DeepNeuralNetwork():
         """
         This method loads a pickled DNN object
         """
-        try:
-            with open(filename, 'rb') as f:
-                dnn = pickle.load(f)
-        except:
+        if not filename:
             return None
+        with open(filename, 'rb') as f:
+            dnn = pickle.load(f)
         return dnn
 
 
