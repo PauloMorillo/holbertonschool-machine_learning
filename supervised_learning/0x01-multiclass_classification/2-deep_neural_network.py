@@ -160,21 +160,3 @@ class DeepNeuralNetwork():
             return object
         else:
             return None
-
- """
-    def save(self, filename):
-         This method saves the instance object to a file in pickle
-        if '.pkl' != filename[-4:]:
-            filename = filename + '.pkl'
-        with open(filename, 'wb') as f:
-            pickle.dump(self, f)
-
-    def load(filename):
-        This method loads a pickled DNN object
-        if os.path.exists(filename) is True:
-            with open(filename, 'rb') as f:
-                dnn = pickle.load(f)
-            return dnn
-        return None
-"""
-
