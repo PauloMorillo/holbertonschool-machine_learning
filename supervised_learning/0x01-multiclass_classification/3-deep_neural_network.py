@@ -57,19 +57,15 @@ class DeepNeuralNetwork():
             w = self.__weights['W{}'.format(lay + 1)]
             b = self.__weights['b{}'.format(lay + 1)]
             z = np.matmul(self.__cache['A{}'.format(lay)].T, w.T).T + b
-            print(w.shape)
-            print("esto es x", z.shape)
             a = 1 / (1 + (np.exp(-z)))
             if lay == (self.__L - 1):
                 denominator = np.sum(np.exp(z), axis=0, keepdims=True)
-                print("denominator shape", denominator.shape)
                 a = (np.exp(z)) / denominator
             self.__cache['A{}'.format(lay + 1)] = a
         return a, self.__cache
 
     def cost(self, Y, A):
         """ This method calculates cost of the DDN model with logistic reg"""
-        print(np.sum(A.T[0]))
         multi = -(Y * np.log(A))
         term1 = np.sum(multi, axis=1, keepdims=True)
         costf = term1 / len(A.T)
@@ -79,9 +75,6 @@ class DeepNeuralNetwork():
         """ This method evaluates the DNN's predictions """
         A, A2 = self.forward_prop(X)
         nA = np.where(A <= 0.5, 0, 1)
-        print(Y)
-        print(Y.shape)
-
         return (nA, self.cost(Y, A))
 
     def gradient_descent(self, Y, cache, alpha=0.05):

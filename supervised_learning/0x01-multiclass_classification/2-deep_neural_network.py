@@ -64,9 +64,10 @@ class DeepNeuralNetwork():
 
     def cost(self, Y, A):
         """ This method calculates cost of the DDN model with logistic reg"""
-        term1 = (-1 / (len(A.T)))
-        costf = term1 * ((Y * (np.log(A))) + ((1 - Y) * np.log(1.0000001 - A)))
-        return np.sum(costf)
+        term1 = (1 / (len(A.T)))
+        term2 = (1 - Y) * (np.log(1.0000001 - A))
+        costf = -((Y * (np.log(A))) + term2)
+        return np.sum(costf) / len(A.T)
 
     def evaluate(self, X, Y):
         """ This method evaluates the DNN's predictions """
@@ -121,10 +122,10 @@ class DeepNeuralNetwork():
         for i in range(iterations + 1):
             A, c = self.evaluate(X, Y)
             if verbose:
-                if i % step == 0 or i == 0 or i == iterations:
+                if i % step == 0 or i == iterations:
                     print("Cost after {} iterations: {}".format(i, c))
             if graph:
-                if i % step == 0 or i == 0 or i == iterations:
+                if i % step == 0 or i == iterations:
                     allcost = allcost + [c]
                     xcost = xcost + [i]
             A, cache = self.forward_prop(X)
@@ -142,11 +143,10 @@ class DeepNeuralNetwork():
         """
          This method saves the instance object to a file in pickle
         """
-        if '.pkl' not in filename[-4:]:
+        if '.pkl' != filename[-4:]:
             filename = filename + '.pkl'
-        f = open(filename, 'wb')
-        pickle.dump(self, f)
-        f.close()
+        with open(filename, 'wb') as f:
+            pickle.dump(self, f)
 
     def load(filename):
         """
