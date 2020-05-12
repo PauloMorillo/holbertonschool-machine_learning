@@ -2,7 +2,7 @@
 """ This module has a deep neural network class"""
 
 import numpy as np
-import matplotlib.pyplot as p
+import matplotlib.pyplot as plt
 import pickle
 import os
 
