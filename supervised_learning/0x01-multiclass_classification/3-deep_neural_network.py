@@ -2,8 +2,9 @@
 """ This module has a deep neural network class"""
 
 import numpy as np
-import matplotlib.pyplot as p
+import matplotlib.pyplot as plt
 import pickle
+import os
 
 
 class DeepNeuralNetwork():
@@ -68,13 +69,17 @@ class DeepNeuralNetwork():
         """ This method calculates cost of the DDN model with logistic reg"""
         multi = -(Y * np.log(A))
         term1 = np.sum(multi, axis=1, keepdims=True)
-        costf = term1 / len(A.T)
+        costf = term1 / A.shape[1]
         return np.sum(costf)
 
     def evaluate(self, X, Y):
         """ This method evaluates the DNN's predictions """
         A, A2 = self.forward_prop(X)
-        nA = np.where(A <= 0.5, 0, 1)
+        # print(A.shape)
+        # print(np.sum(A.T[0]))
+        # print(A)
+        nA = np.where(A == np.amax(A, axis=0), 1, 0)
+        # print(nA.shape)
         return (nA, self.cost(Y, A))
 
     def gradient_descent(self, Y, cache, alpha=0.05):
@@ -88,8 +93,8 @@ class DeepNeuralNetwork():
             else:
                 g1 = (A1 * (1 - A1))
                 dz = np.matmul(w['W{}'.format(lay + 1)].T, dz) * g1
-            dw = np.matmul(dz, cache['A{}'.format(lay - 1)].T) / (len(Y.T))
-            db = np.sum(dz, axis=1, keepdims=True) / (len(Y.T))
+            dw = np.matmul(dz, cache['A{}'.format(lay - 1)].T) / (Y.shape[1])
+            db = np.sum(dz, axis=1, keepdims=True) / (Y.shape[1])
             fix1 = (db * alpha)
             fix2 = (dw * alpha)
             if lay < self.__L:
@@ -106,7 +111,8 @@ class DeepNeuralNetwork():
         self.__weights['b{}'.format(lay + 1)] = blast
         self.__weights['W{}'.format(lay + 1)] = wlast
 
-    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
+    def train(self, X, Y, iterations=5000, alpha=0.05,
+              verbose=True, graph=True, step=100):
         """ This method trains the DNN """
         if type(iterations) is not int:
             raise TypeError("iterations must be an integer")
@@ -121,16 +127,17 @@ class DeepNeuralNetwork():
         xcost = []
 
         for i in range(iterations + 1):
+            A, cache = self.forward_prop(X)
             A, c = self.evaluate(X, Y)
             if verbose:
-                if i % step == 0 or i == 0 or i == iterations:
+                if i % step == 0 or i == iterations:
                     print("Cost after {} iterations: {}".format(i, c))
             if graph:
-                if i % step == 0 or i == 0 or i == iterations:
+                if i % step == 0 or i == iterations:
                     allcost = allcost + [c]
                     xcost = xcost + [i]
-            A, cache = self.forward_prop(X)
-            self.gradient_descent(Y, cache, alpha)
+            if i < iterations:
+                self.gradient_descent(Y, cache, alpha)
 
         if graph:
             plt.xlabel('iteration')
@@ -144,7 +151,7 @@ class DeepNeuralNetwork():
         """
          This method saves the instance object to a file in pickle
         """
-        if '.pkl' not in filename:
+        if '.pkl' != filename[-4:]:
             filename = filename + '.pkl'
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
@@ -153,23 +160,8 @@ class DeepNeuralNetwork():
         """
         This method loads a pickled DNN object
         """
-        try:
+        if os.path.exists(filename) is True:
             with open(filename, 'rb') as f:
                 dnn = pickle.load(f)
-        except:
-            return None
-        return dnn
-
-
-"""
-        dz2 = A2 - Y
-        dw2 = np.matmul(dz2, A1.T) / (len(Y.T))
-        db2 = np.sum(dz2, axis=1, keepdims=True) / (len(Y.T))
-        dz1 = np.matmul(self.__W2.T, dz2) * (A1 * (1 - A1))
-        dw1 = np.matmul(dz1, X.T) / (len(A1.T))
-        db1 = np.sum(dz1, axis=1, keepdims=True) / (len(Y.T))
-        self.__b1 = self.__b1 - ((db1) * alpha)
-        self.__W1 = self.__W1 - (alpha * dw1)
-        self.__b2 = self.__b2 - ((db2) * alpha)
-        self.__W2 = self.__W2 - (alpha * dw2)
-"""
+            return dnn
+        return None
