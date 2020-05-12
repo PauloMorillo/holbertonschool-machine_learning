@@ -102,7 +102,8 @@ class DeepNeuralNetwork():
         self.__weights['b{}'.format(lay + 1)] = blast
         self.__weights['W{}'.format(lay + 1)] = wlast
 
-    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
+    def train(self, X, Y, iterations=5000, alpha=0.05,
+              verbose=True, graph=True, step=100):
         """ This method trains the DNN """
         if type(iterations) is not int:
             raise TypeError("iterations must be an integer")
@@ -149,11 +150,12 @@ class DeepNeuralNetwork():
         """
         This method loads a pickled DNN object
         """
-        if not filename:
+        try:
+            with open(filename, 'rb') as f:
+                dnn = pickle.load(f)
+            return dnn
+        except E as N:
             return None
-        with open(filename, 'rb') as f:
-            dnn = pickle.load(f)
-        return dnn
 
 
 """
