@@ -129,8 +129,8 @@ class DeepNeuralNetwork():
                 if i % step == 0 or i == iterations:
                     allcost = allcost + [c]
                     xcost = xcost + [i]
-            A, cache = self.forward_prop(X)
-            self.gradient_descent(Y, cache, alpha)
+            if i < iterations:
+                self.gradient_descent(Y, cache, alpha)
 
         if graph:
             plt.xlabel('iteration')
