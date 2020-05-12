@@ -142,7 +142,7 @@ class DeepNeuralNetwork():
         """
          This method saves the instance object to a file in pickle
         """
-        if '.pkl' not in filename[-4:]:
+        if '.pkl' not in filename:
             filename = filename + '.pkl'
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
