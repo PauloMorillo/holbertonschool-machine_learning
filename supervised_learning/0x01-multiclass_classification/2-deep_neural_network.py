@@ -106,42 +106,39 @@ class DeepNeuralNetwork():
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
-        """
-        Complete Train of the deep neural network
-        """
+        """ This method trains the DNN """
         if type(iterations) is not int:
             raise TypeError("iterations must be an integer")
-        if iterations < 1:
+        if iterations <= 0:
             raise ValueError("iterations must be a positive integer")
         if type(alpha) is not float:
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
 
-        i = 0
-        epochs, costs = [], []
+        allcost = []
+        xcost = []
 
-        while (i < iterations + 1):
+        for i in range(iterations + 1):
             A, cache = self.forward_prop(X)
-            if i % step == 0 or i == iterations:
-                cost = self.cost(Y, A)
-                epochs.append(i)
-                costs.append(cost)
-                if verbose is True:
-                    w = "Cost after {} iterations: {}".format(i, cost)
-                    print(w)
-            if i < iterations:
-                self.gradient_descent(Y, cache, alpha)
-            i += 1
+            A, c = self.evaluate(X, Y)
+            if verbose:
+                if i % step == 0 or i == iterations:
+                    print("Cost after {} iterations: {}".format(i, c))
+            if graph:
+                if i % step == 0 or i == iterations:
+                    allcost = allcost + [c]
+                    xcost = xcost + [i]
+            A, cache = self.forward_prop(X)
+            self.gradient_descent(Y, cache, alpha)
 
-        if graph is True:
-            plt.plot(epochs, costs)
+        if graph:
             plt.xlabel('iteration')
             plt.ylabel('cost')
-            plt.suptitle("Training Cost")
+            plt.title('Training Cost')
+            plt.plot(xcost, allcost, 'b')
             plt.show()
-
-        return self.evaluate(X, Y)
+        return (self.evaluate(X, Y))
 
 
     def save(self, filename):
