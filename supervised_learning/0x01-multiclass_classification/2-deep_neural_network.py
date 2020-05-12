@@ -4,6 +4,7 @@
 import numpy as np
 import matplotlib.pyplot as p
 import pickle
+import os
 
 
 class DeepNeuralNetwork():
@@ -141,7 +142,7 @@ class DeepNeuralNetwork():
         """
          This method saves the instance object to a file in pickle
         """
-        if '.pkl' not in filename:
+        if '.pkl' not in filename[-4:]:
             filename = filename + '.pkl'
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
@@ -150,7 +151,7 @@ class DeepNeuralNetwork():
         """
         This method loads a pickled DNN object
         """
-        if filename:
+        if os.path.exists(filename):
             with open(filename, 'rb') as f:
                 dnn = pickle.load(f)
             return dnn
