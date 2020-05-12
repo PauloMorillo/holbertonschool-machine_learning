@@ -8,9 +8,9 @@ def one_hot_encode(Y, classes):
     """This method encode a numerical label vector into
     a one-hot matrix
     """
-    if Y is None:
+    if Y is None or type(Y) is not np.ndarray:
         return None
-    if type(classes) is not int or classes <= np.amax(Y):
+    if type(classes) is not int or classes != np.amax(Y) + 1:
         return None
     encoding_y = np.zeros((classes, len(Y)))
     for i in range(len(Y)):
