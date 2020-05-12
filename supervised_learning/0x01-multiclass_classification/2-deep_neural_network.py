@@ -144,8 +144,8 @@ class DeepNeuralNetwork():
         """
         if '.pkl' not in filename:
             filename = filename + '.pkl'
-        with open(filename, 'wb') as f:
-            pickle.dump(self, f)
+        f = open(filename, 'wb')
+        pickle.dump(self, f)
         f.close()
 
     def load(filename):
@@ -154,7 +154,7 @@ class DeepNeuralNetwork():
         """
         if not os.path.exists(filename):
             return None
-        with open(filename, 'rb') as f:
-            dnn = pickle.load(f)
+        f = open(filename, 'rb')
+        dnn = pickle.load(f)
         f.close()
         return dnn
