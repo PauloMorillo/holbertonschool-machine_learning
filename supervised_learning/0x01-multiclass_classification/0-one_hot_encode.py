@@ -14,6 +14,5 @@ def one_hot_encode(Y, classes):
         return None
     encoding_y = np.zeros((classes, len(Y)))
     for i in range(len(Y)):
-        if encoding_y[Y[i]][i]:
-            encoding_y[Y[i]][i] = 1
+        encoding_y[Y[i]][i] = 1
     return encoding_y
