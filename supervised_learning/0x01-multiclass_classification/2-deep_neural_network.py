@@ -141,19 +141,40 @@ class DeepNeuralNetwork():
 
     def save(self, filename):
         """
-         This method saves the instance object to a file in pickle
+        save an object in a file with pickle module
+        it uses serialization
         """
+        if filename[-4:] != ".pkl":
+            filename += ".pkl"
+        with open(filename, 'wb') as fd:
+            pickle.dump(self, fd)
+
+    def load(filename):
+        """
+        load the object stored in the pickle file
+        i uses deserialization
+        """
+        if os.path.exists(filename) is True:
+            with open(filename, 'rb') as fd:
+                object = pickle.load(fd)
+            return object
+        else:
+            return None
+
+ """
+    def save(self, filename):
+         This method saves the instance object to a file in pickle
         if '.pkl' != filename[-4:]:
             filename = filename + '.pkl'
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
 
     def load(filename):
-        """
         This method loads a pickled DNN object
-        """
         if os.path.exists(filename) is True:
             with open(filename, 'rb') as f:
                 dnn = pickle.load(f)
             return dnn
         return None
+"""
+
