@@ -18,6 +18,6 @@ def one_hot_decode(one_hot):
                     decoding[colspos] = rowspos
                 colspos = colspos + 1
             rowspos = rowspos + 1
-    except E:
+    except:
         return None
     return decoding.astype(int)
