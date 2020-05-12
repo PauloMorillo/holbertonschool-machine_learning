@@ -154,7 +154,7 @@ class DeepNeuralNetwork():
             with open(filename, 'rb') as f:
                 dnn = pickle.load(f)
             return dnn
-        except E as N:
+        except E:
             return None
 
 
