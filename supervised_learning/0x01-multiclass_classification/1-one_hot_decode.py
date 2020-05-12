@@ -10,4 +10,6 @@ def one_hot_decode(one_hot):
     """
     if one_hot is None or type(one_hot) is not np.ndarray:
         return None
+    if one_hot.shape[0] <= 9:
+        return None
     return np.argmax(one_hot, axis=0)
