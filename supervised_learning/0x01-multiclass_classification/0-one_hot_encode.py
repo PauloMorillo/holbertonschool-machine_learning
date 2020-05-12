@@ -10,7 +10,7 @@ def one_hot_encode(Y, classes):
     """
     if Y is None or type(Y) is not np.ndarray:
         return None
-    if type(classes) is not int or classes != np.amax(Y) + 1:
+    if type(classes) is not int or classes <= np.amax(Y):
         return None
     encoding_y = np.zeros((classes, len(Y)))
     for i in range(len(Y)):
