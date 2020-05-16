@@ -20,7 +20,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     sess = tf.Session()
     sess.run(init)
     trainr, lossr, accua = sess.run((train_op, loss, accua), feed_dict={x: X_train, y: Y_train})
-    trainrv, lossv, accuav = sess.run((train_op, loss, accua), feed_dict={x: X_valid, y: Y_valid})
+    lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid, y: Y_valid})
 
     for i in range(iterations):
         if (i % 100) == 0:
@@ -31,5 +31,5 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
             print("\tValidation Accuracy: {accuracy}".format(accuav))
 
         trainr, lossr, accua = sess.run((train_op, loss, accua), feed_dict={x: X_train, y: Y_train})
-        trainrv, lossv, accuav = sess.run((train_op, loss, accua), feed_dict={x: X_valid, y: Y_valid})
+        lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid, y: Y_valid})
     return "/dsfdsf"
