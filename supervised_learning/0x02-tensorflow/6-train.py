@@ -32,7 +32,10 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
             print("\tValidation Accuracy: {}".format(accuav))
         if (i < iterations):
             sess.run((train_op), feed_dict={x: X_train, y: Y_train})
-            lossr, accuar = sess.run((loss, accua), feed_dict={x: X_train, y: Y_train})
-            lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid, y: Y_valid})
+            lossr, accuar = sess.run((loss, accua), feed_dict={x: X_train,
+                                                               y: Y_train})
+            lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid,
+                                                               y: Y_valid})
+    path = saver.save(sess, save_path)
     sess.close()
-    return saver.save(sess, save_path)
+    return path
