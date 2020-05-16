@@ -19,10 +19,17 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     init = tf.global_variables_initializer()
     sess = tf.Session()
     sess.run(init)
+    trainr, lossr, accua = sess.run((train_op, loss, accua), feed_dict={x: X_train, y: Y_train})
+    trainrv, lossv, accuav = sess.run((train_op, loss, accua), feed_dict={x: X_valid, y: Y_valid})
+
     for i in range(iterations):
-        trainr, lossr = sess.run((train_op, loss), feed_dict={x: X_train, y: Y_train})
-        validr, lossvar = sess.run((train_op, loss), feed_dict={x: X_valid, y: Y_valid})
-        if i % 100:
+        if (i % 100) == 0:
             print("After {} iterations:".format(i))
-            print("\tTraining Cost: {}".format(lossr))      
+            print("\tTraining Cost: {}".format(lossr))
+            print("\tTraining Accuracy: {accuracy}".format(accua))
+            print("\tValidation Cost: {cost}".format(lossv))
+            print("\tValidation Accuracy: {accuracy}".format(accuav))
+
+        trainr, lossr, accua = sess.run((train_op, loss, accua), feed_dict={x: X_train, y: Y_train})
+        trainrv, lossv, accuav = sess.run((train_op, loss, accua), feed_dict={x: X_valid, y: Y_valid})
     return "/dsfdsf"
