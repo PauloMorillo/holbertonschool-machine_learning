@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """ This module has a method calculate_loss """
 import tensorflow as tf
-import numpy as np
 
 
 def calculate_loss(y, y_pred):
