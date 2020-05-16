@@ -21,8 +21,8 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     sess.run(init)
     for i in range(iterations):
         trainr, lossr = sess.run((train_op, loss), feed_dict={x: X_train, y: Y_train})
-	if i % 100:
+        validr, lossvar = sess.run((train_op, loss), feed_dict={x: X_valid, y: Y_valid})
+        if i % 100:
             print("After {} iterations:".format(i))
-            print("\tTraining Cost: {}".format(lossr))
-        
+            print("\tTraining Cost: {}".format(lossr))      
     return "/dsfdsf"
