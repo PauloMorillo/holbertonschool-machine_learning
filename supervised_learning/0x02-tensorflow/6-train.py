@@ -11,38 +11,38 @@ forward_prop = __import__('2-forward_prop').forward_prop
 def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
           alpha, iterations, save_path="/tmp/model.ckpt"):
     """ This method train the NN and save the model """
-    x, y = create_placeholders(X_train.shape[1], Y_train.shape[1])
+    x, y = create_placeholders(X_train.shape[1], layer_sizes[-1])
+    y_pred = forward_prop(x, layer_sizes, activations)
+    loss = calculate_loss(y, y_pred)
+    accua = calculate_accuracy(y, y_pred)
+    train_op = create_train_op(loss, alpha)
     tf.add_to_collection('x', x)
     tf.add_to_collection('y', y)
-    y_pred = forward_prop(x, layer_sizes, activations)
     tf.add_to_collection('y_pred', y_pred)
-    loss = calculate_loss(y, y_pred)
     tf.add_to_collection('loss', loss)
-    accua = calculate_accuracy(y, y_pred)
     tf.add_to_collection('accuracy', accua)
-    train_op = create_train_op(loss, alpha)
     tf.add_to_collection('train_op', train_op)
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
-    with tf.Session() as sess:
-        sess.run(init)
-        lossr, accuar = sess.run((loss, accua), feed_dict={x: X_train,
-                                                           y: Y_train})
-        lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid,
-                                                           y: Y_valid})
+    sess = tf.Session()
+    sess.run(init)
+    lossr, accuar = sess.run((loss, accua), feed_dict={x: X_train,
+                                                       y: Y_train})
+    lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid,
+                                                       y: Y_valid})
 
-        for i in range(iterations + 1):
-            if (i % 100) == 0:
-                print("After {} iterations:".format(i))
-                print("\tTraining Cost: {}".format(lossr))
-                print("\tTraining Accuracy: {}".format(accuar))
-                print("\tValidation Cost: {}".format(lossv))
-                print("\tValidation Accuracy: {}".format(accuav))
-            if (i < iterations):
-                sess.run((train_op), feed_dict={x: X_train, y: Y_train})
-                lossr, accuar = sess.run((loss, accua), feed_dict={x: X_train,
-                                                                   y: Y_train})
-                lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid,
-                                                                   y: Y_valid})
-        path = saver.save(sess, save_path)
+    for i in range(iterations + 1):
+        if (i % 100) == 0 or i == iterations:
+            print("After {} iterations:".format(i))
+            print("\tTraining Cost: {}".format(lossr))
+            print("\tTraining Accuracy: {}".format(accuar))
+            print("\tValidation Cost: {}".format(lossv))
+            print("\tValidation Accuracy: {}".format(accuav))
+        if (i < iterations):
+            sess.run((train_op), feed_dict={x: X_train, y: Y_train})
+            lossr, accuar = sess.run((loss, accua), feed_dict={x: X_train,
+                                                               y: Y_train})
+            lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid,
+                                                               y: Y_valid})
+    path = saver.save(sess, save_path)
     return path
