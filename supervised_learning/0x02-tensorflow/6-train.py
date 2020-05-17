@@ -16,6 +16,12 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     loss = calculate_loss(y, y_pred)
     accua = calculate_accuracy(y, y_pred)
     train_op = create_train_op(loss, alpha)
+    tf.add_to_collection('x', x)
+    tf.add_to_collection('y', y)
+    tf.add_to_collection('y_pred', y_pred)
+    tf.add_to_collection('loss', loss)
+    tf.add_to_collection('accuracy', accua)
+    tf.add_to_collection('train_op', train_op)
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
     sess = tf.Session()
@@ -36,6 +42,6 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
                                                                y: Y_train})
             lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid,
                                                                y: Y_valid})
-    path = saver.save(sess, save_path, global_step=iterations)
+    path = saver.save(sess, save_path)
     sess.close()
     return path
