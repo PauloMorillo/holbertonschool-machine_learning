@@ -36,6 +36,6 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
                                                                y: Y_train})
             lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid,
                                                                y: Y_valid})
-    path = saver.save(sess, save_path)
+    path = saver.save(sess, save_path, global_step=(i-1))
     sess.close()
     return path
