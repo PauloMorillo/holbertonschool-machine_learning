@@ -24,24 +24,25 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     tf.add_to_collection('train_op', train_op)
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
-    sess = tf.Session()
-    sess.run(init)
-    lossr, accuar = sess.run((loss, accua), feed_dict={x: X_train, y: Y_train})
-    lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid, y: Y_valid})
+    with tf.Session() as sess:
+        sess.run(init)
+        lossr, accuar = sess.run((loss, accua), feed_dict={x: X_train,
+                                                           y: Y_train})
+        lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid,
+                                                           y: Y_valid})
 
-    for i in range(iterations + 1):
-        if (i % 100) == 0:
-            print("After {} iterations:".format(i))
-            print("\tTraining Cost: {}".format(lossr))
-            print("\tTraining Accuracy: {}".format(accuar))
-            print("\tValidation Cost: {}".format(lossv))
-            print("\tValidation Accuracy: {}".format(accuav))
-        if (i < iterations):
-            sess.run((train_op), feed_dict={x: X_train, y: Y_train})
-            lossr, accuar = sess.run((loss, accua), feed_dict={x: X_train,
-                                                               y: Y_train})
-            lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid,
-                                                               y: Y_valid})
-    path = saver.save(sess, save_path)
-    sess.close()
+        for i in range(iterations + 1):
+            if (i % 100) == 0:
+                print("After {} iterations:".format(i))
+                print("\tTraining Cost: {}".format(lossr))
+                print("\tTraining Accuracy: {}".format(accuar))
+                print("\tValidation Cost: {}".format(lossv))
+                print("\tValidation Accuracy: {}".format(accuav))
+            if (i < iterations):
+                sess.run((train_op), feed_dict={x: X_train, y: Y_train})
+                lossr, accuar = sess.run((loss, accua), feed_dict={x: X_train,
+                                                                   y: Y_train})
+                lossv, accuav = sess.run((loss, accua), feed_dict={x: X_valid,
+                                                                   y: Y_valid})
+        path = saver.save(sess, save_path)
     return path
