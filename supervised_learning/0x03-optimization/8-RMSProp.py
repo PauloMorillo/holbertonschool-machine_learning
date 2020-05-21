@@ -7,6 +7,6 @@ def create_RMSProp_op(loss, alpha, beta2, epsilon):
     """
     creates the training operation for a neural network
     """
-    operation = tf.train.RMSPropOptimizer(alpha, beta2, epsilon)
+    operation = tf.train.RMSPropOptimizer(alpha, momentum=beta2, epsilon=epsilon)
     train = operation.minimize(loss)
     return train
