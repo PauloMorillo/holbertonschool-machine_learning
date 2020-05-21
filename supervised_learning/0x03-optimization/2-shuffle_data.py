@@ -7,7 +7,6 @@ def shuffle_data(X, Y):
     """
     This method shuffle_data
     """
-    X = np.random.permutation(X)
-    np.random.seed(0)
-    Y = np.random.permutation(Y)
-    return X, Y
+    vec = np.arange(X.shape[0])
+    i = np.random.permutation(vec)
+    return X[i], Y[i]

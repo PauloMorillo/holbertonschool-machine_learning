@@ -36,17 +36,21 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         print("\tTraining Accuracy: {}".format(t_accuracy))
         print("\tValidation Cost: {}".format(v_cost))
         print("\tValidation Accuracy: {}".format(v_accuracy))
-        print("\tTraining Cost: {}".format(t_cost))
         if ep < epochs:
             i = 0
             for batch, labels in zip(xnew, ynew):
+                #print(batch, labels)
+                #print(batch.shape, labels.shape)
+                #return 
+                #print(batch.shape, labels.shape)
                 sess.run(train_op, feed_dict={x: batch, y:labels})
-                b_cost, b_accuraccy = sess.run([loss, accuracy],
+                b_cost, b_accuracy = sess.run([loss, accuracy],
                                                feed_dict={x: batch, y:labels})
                 if i % 100 == 0 and i is not 0:
                     print("\tStep {}:".format(i))
                     print("\t\tCost: {}".format(b_cost))
                     print("\t\tAccuracy: {}".format(b_accuracy))
+                i = i + 1
 
     path = saver.save(sess, save_path)
     return path
