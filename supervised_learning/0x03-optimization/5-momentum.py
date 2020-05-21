@@ -8,7 +8,6 @@ def update_variables_momentum(alpha, beta1, var, grad, v):
     This method calculates the weighted
     moving average of a data set
     """
-    v = np.multiply(beta1, v) + (np.multiply((1-beta1), grad))
-    #print(v)
+    v = np.multiply(beta1, v) + (np.multiply((1 - beta1), grad))
     var = var - np.multiply(alpha, v)
     return var, v
