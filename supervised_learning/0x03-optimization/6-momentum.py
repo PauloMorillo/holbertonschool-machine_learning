@@ -9,4 +9,4 @@ def create_momentum_op(loss, alpha, beta1):
     """
     operation = tf.train.MomentumOptimizer(alpha, beta1)
     train = operation.minimize(loss)
-    return loss
+    return train
