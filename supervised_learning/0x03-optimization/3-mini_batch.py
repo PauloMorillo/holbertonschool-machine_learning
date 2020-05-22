@@ -49,6 +49,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                 # print(batch.shape, labels.shape)
                 # return
                 # print(batch.shape, labels.shape)
+                sess.run(train_op, feed_dict={x: X_s[posi:posf],
+                                              y: Y_s[posi:posf]})
                 b_cost, b_accuracy = sess.run([loss, accuracy],
                                               feed_dict={x: X_s[posi:posf],
                                                          y: Y_s[posi:posf]})
@@ -61,7 +63,5 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                     print("\tStep {}:".format(i + 1))
                     print("\t\tCost: {}".format(b_cost))
                     print("\t\tAccuracy: {}".format(b_accuracy))
-                sess.run(train_op, feed_dict={x: X_s[posi:posf],
-                                              y: Y_s[posi:posf]})
     path = saver.save(sess, save_path)
     return path
