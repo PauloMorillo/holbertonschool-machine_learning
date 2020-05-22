@@ -9,13 +9,14 @@ def create_batch_norm_layer(prev, n, activation):
     creates a batch normalization layer
     for a neural network a neural network
     """
-    mean, var = tf.nn.momments(prev)
-    gamma = np.ones((1, n))
-    beta = np.zeros((1, n))
-    znorm = tf.nn.batch_normalization(prev, mean, var, beta, gamma, 1e-8)
+
     kernel = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
-    predfunc = tf.layers.Dense(units=n,
-                               activations=activation,
-                               kernel_initializer=kernel)
-    y_pred = predfunc(znorm)
+    y_pred = tf.layers.dense(prev, units=n,
+                             kernel_initializer=kernel)
+
+    mean, var = tf.nn.moments(y_pred, [0], keep_dims=True)
+    gamma = tf.Variable(tf.ones([y_pred.get_shape()[-1]]))
+    beta = tf.Variable(tf.zeros([y_pred.get_shape()[-1]]))
+    znorm = tf.nn.batch_normalization(y_pred, mean, var, beta, gamma, 1e-8)
+    y_pred = activation(znorm)
     return y_pred
