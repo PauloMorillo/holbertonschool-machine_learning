@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """ This module has the train_mini_batch method"""
 import tensorflow as tf
-
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 
@@ -20,15 +19,14 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
     loss = tf.get_collection('loss')[0]
     accuracy = tf.get_collection('accuracy')[0]
     train_op = tf.get_collection('train_op')[0]
-    m = X_train.shape[0]
-    endpos = m // batch_size + (m % batch_size > 0)
+    m = Y_train.shape[0]
+    endpos = (m // batch_size) + (m % batch_size > 0)
     # print(X_train[posi:batch_size].shape)
     # print(xnew)
     for ep in range(epochs + 1):
         X_s, Y_s = shuffle_data(X_train, Y_train)
-        nb = (X_train.shape[0] / batch_size) + 1
         t_cost, t_accuracy = sess.run([loss, accuracy],
-                                      feed_dict={x: X_s, y: Y_s})
+                                      feed_dict={x: X_train, y: Y_train})
         v_cost, v_accuracy = sess.run([loss, accuracy],
                                       feed_dict={x: X_valid, y: Y_valid})
         # xnew = np.array_split(X_train, nb)
@@ -59,7 +57,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                     posf = posf + batch_size
                 else:
                     posf = len(X_train)
-                if (i) % 100 == 0 and i is not 0:
+                if i % 100 == 0 and i:
                     print("\tStep {}:".format(i))
                     print("\t\tCost: {}".format(b_cost))
                     print("\t\tAccuracy: {}".format(b_accuracy))
