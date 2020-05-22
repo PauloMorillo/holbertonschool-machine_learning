@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """ This module has the train_mini_batch method"""
-import numpy as np
 import tensorflow as tf
 
 shuffle_data = __import__('2-shuffle_data').shuffle_data
@@ -22,9 +21,9 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
     loss = tf.get_collection('loss')[0]
     accuracy = tf.get_collection('accuracy')[0]
     train_op = tf.get_collection('train_op')[0]
-    endpos = X_train.shape[0] / batch_size
-    posi = 0
-    print(X_train[posi:batch_size].shape)
+    m = X_train.shape[0]
+    endpos = m // batch_size + (m % batch_size > 0)
+    # print(X_train[posi:batch_size].shape)
     # print(xnew)
     for ep in range(epochs + 1):
         X_s, Y_s = shuffle_data(X_train, Y_train)
@@ -33,28 +32,37 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                                       feed_dict={x: X_s, y: Y_s})
         v_cost, v_accuracy = sess.run([loss, accuracy],
                                       feed_dict={x: X_valid, y: Y_valid})
-        xnew = np.array_split(X_train, nb)
-        ynew = np.array_split(Y_train, nb)
+        # xnew = np.array_split(X_train, nb)
+        # ynew = np.array_split(Y_train, nb)
+        # print(len(xnew))
         print("After {} epochs:".format(ep))
         print("\tTraining Cost: {}".format(t_cost))
         print("\tTraining Accuracy: {}".format(t_accuracy))
         print("\tValidation Cost: {}".format(v_cost))
         print("\tValidation Accuracy: {}".format(v_accuracy))
         if ep < epochs:
-            i = 0
-            for batch, labels in zip(xnew, ynew):
+            posi = 0
+            posf = 32
+            for i in range(endpos):
+                # print(X_train[posi:posf].shape, i)
                 # print(batch, labels)
                 # print(batch.shape, labels.shape)
                 # return
                 # print(batch.shape, labels.shape)
-                sess.run(train_op, feed_dict={x: batch, y: labels})
+                sess.run(train_op, feed_dict={x: X_s[posi:posf],
+                                              y: Y_s[posi:posf]})
                 b_cost, b_accuracy = sess.run([loss, accuracy],
-                                              feed_dict={x: batch, y: labels})
+                                              feed_dict={x: X_s[posi:posf],
+                                                         y: Y_s[posi:posf]})
+                posi = posf
+                if i < endpos - 1:
+                    posf = posf + batch_size
+                else:
+                    posf = len(X_train - 1)
                 if i % 100 == 0 and i is not 0:
                     print("\tStep {}:".format(i))
                     print("\t\tCost: {}".format(b_cost))
                     print("\t\tAccuracy: {}".format(b_accuracy))
-                i = i + 1
 
     path = saver.save(sess, save_path)
     return path
