@@ -43,7 +43,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
             posi = 0
             posf = batch_size
             for i in range(1, (endpos + 1)):
-                # print(X_train[posi:posf].shape, i)
+                # print(X_train[posi:posf].shape, i, posi, posf)
                 # print(Y_train[posi:posf].shape, i)
                 # print(batch, labels)
                 # print(batch.shape, labels.shape)
@@ -58,7 +58,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                 if i < endpos - 1:
                     posf = posf + batch_size
                 else:
-                    posf = len(X_train - 1)
+                    posf = len(X_train)
                 if (i) % 100 == 0 and i is not 0:
                     print("\tStep {}:".format(i))
                     print("\t\tCost: {}".format(b_cost))
