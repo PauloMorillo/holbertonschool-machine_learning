@@ -42,7 +42,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         if ep < epochs:
             posi = 0
             posf = batch_size
-            for i in range(endpos):
+            for i in range(1, (endpos + 1)):
                 # print(X_train[posi:posf].shape, i)
                 # print(Y_train[posi:posf].shape, i)
                 # print(batch, labels)
@@ -59,8 +59,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                     posf = posf + batch_size
                 else:
                     posf = len(X_train - 1)
-                if (i + 1) % 100 == 0 and i is not 0:
-                    print("\tStep {}:".format(i + 1))
+                if (i) % 100 == 0 and i is not 0:
+                    print("\tStep {}:".format(i))
                     print("\t\tCost: {}".format(b_cost))
                     print("\t\tAccuracy: {}".format(b_accuracy))
     path = saver.save(sess, save_path)
