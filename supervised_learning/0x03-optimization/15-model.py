@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ This module has the mini_batch gradient descent method"""
 import tensorflow as tf
+import numpy as np
 
 
 def shuffle_data(X, Y):
