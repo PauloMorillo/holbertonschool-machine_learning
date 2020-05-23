@@ -147,7 +147,7 @@ def model(Data_train, Data_valid, layers, activations,
                 # print(batch.shape, labels.shape)
                 sess.run(train_op, feed_dict={x: X_s[posi:posf],
                                               y: Y_s[posi:posf]})
-                global_step.assign_add(1)
+                sess.run(global_step.assign_add(1))
                 b_cost, b_accuracy = sess.run([loss, accuracy],
                                               feed_dict={x: X_s[posi:posf],
                                                          y: Y_s[posi:posf]})
