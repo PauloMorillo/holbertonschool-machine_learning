@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" This module has the mini_batch gradient descent method"""
+""" This module has the train_mini_batch method"""
 import tensorflow as tf
 import numpy as np
 
@@ -21,13 +21,13 @@ def create_layer(prev, n, activation):
     return lay(prev)
 
 
-def forward_prop(x, layer_sizes=[], activations=[]):
+def forward_prop(x, layer_sizes=[], activations=[], epsilon=1e-8):
     """ This method create a forwdward prop for the NN """
     for node, activation in zip(layer_sizes, activations):
         if activation is None:
             y = create_layer(x, node, activation)
         else:
-            y = create_batch_norm_layer(x, node, activation)
+            y = create_batch_norm_layer(x, node, activation, epsilon)
         x = y
     return x
 
@@ -41,7 +41,7 @@ def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
     return train
 
 
-def create_batch_norm_layer(prev, n, activation):
+def create_batch_norm_layer(prev, n, activation, epsilon):
     """
     creates a batch normalization layer
     for a neural network a neural network
@@ -53,7 +53,7 @@ def create_batch_norm_layer(prev, n, activation):
     mean, var = tf.nn.moments(y_pred, [0], keep_dims=True)
     gamma = tf.Variable(tf.ones([y_pred.get_shape()[-1]]))
     beta = tf.Variable(tf.zeros([y_pred.get_shape()[-1]]))
-    znorm = tf.nn.batch_normalization(y_pred, mean, var, beta, gamma, 1e-8)
+    znorm = tf.nn.batch_normalization(y_pred, mean, var, beta, gamma, epsilon)
     y_pred = activation(znorm)
     return y_pred
 
@@ -95,31 +95,29 @@ def model(Data_train, Data_valid, layers, activations,
     This method trains a loaded neural
     network model using mini-batch gradient descent
     """
-    print(Data_train, Data_valid)
-    print(Data_train[0].shape[1])
     X_train = Data_train[0]
     Y_train = Data_train[1]
     X_valid = Data_valid[0]
     Y_valid = Data_valid[1]
+    m = Y_train.shape[0]
+    endpos = (m // batch_size) + (m % batch_size > 0)
     x, y = create_placeholders(X_train.shape[1], Y_train.shape[1])
     tf.add_to_collection('x', x)
     tf.add_to_collection('y', y)
-    y_pred = forward_prop(x, layers, activations)
+    y_pred = forward_prop(x, layers, activations, epsilon)
     tf.add_to_collection('y_pred', y_pred)
     loss = calculate_loss(y, y_pred)
     tf.add_to_collection('loss', loss)
     accuracy = calculate_accuracy(y, y_pred)
     tf.add_to_collection('accuracy', accuracy)
     global_step = tf.Variable(0, trainable=False)
-    alpha = learning_rate_decay(alpha, decay_rate, global_step, epochs)
+    alpha = learning_rate_decay(alpha, decay_rate, global_step, endpos)
     train_op = create_Adam_op(loss, alpha, beta1, beta2, epsilon)
     tf.add_to_collection('train_op', train_op)
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
     sess = tf.Session()
     sess.run(init)
-    m = Y_train.shape[0]
-    endpos = (m // batch_size) + (m % batch_size > 0)
     # print(X_train[posi:batch_size].shape)
     # print(xnew)
     for ep in range(epochs + 1):
