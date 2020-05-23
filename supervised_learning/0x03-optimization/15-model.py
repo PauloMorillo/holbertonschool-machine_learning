@@ -48,9 +48,10 @@ def create_batch_norm_layer(prev, n, activation, epsilon):
     """
 
     kernel = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
-    y_pred = tf.layers.dense(prev, units=n,
-                             kernel_initializer=kernel)
-    mean, var = tf.nn.moments(y_pred, [0], keep_dims=True)
+    model = tf.layers.Dense(units=n,
+                            kernel_initializer=kernel)
+    y_pred = model(prev)
+    mean, var = tf.nn.moments(y_pred, [0])
     gamma = tf.Variable(tf.ones([y_pred.get_shape()[-1]]))
     beta = tf.Variable(tf.zeros([y_pred.get_shape()[-1]]))
     znorm = tf.nn.batch_normalization(y_pred, mean, var, beta, gamma, epsilon)
@@ -102,17 +103,17 @@ def model(Data_train, Data_valid, layers, activations,
     m = Y_train.shape[0]
     endpos = (m // batch_size) + (m % batch_size > 0)
     x, y = create_placeholders(X_train.shape[1], Y_train.shape[1])
-    tf.add_to_collection('x', x)
-    tf.add_to_collection('y', y)
     y_pred = forward_prop(x, layers, activations, epsilon)
-    tf.add_to_collection('y_pred', y_pred)
     loss = calculate_loss(y, y_pred)
-    tf.add_to_collection('loss', loss)
     accuracy = calculate_accuracy(y, y_pred)
-    tf.add_to_collection('accuracy', accuracy)
     global_step = tf.Variable(0, trainable=False)
     alpha = learning_rate_decay(alpha, decay_rate, global_step, endpos)
     train_op = create_Adam_op(loss, alpha, beta1, beta2, epsilon)
+    tf.add_to_collection('x', x)
+    tf.add_to_collection('y', y)
+    tf.add_to_collection('y_pred', y_pred)
+    tf.add_to_collection('loss', loss)
+    tf.add_to_collection('accuracy', accuracy)
     tf.add_to_collection('train_op', train_op)
     init = tf.global_variables_initializer()
     saver = tf.train.Saver()
