@@ -32,7 +32,7 @@ pip install --user pycodestyle==2.5
 
 
 ## Author
-[Paulo Morillo] (https://www.linkedin.com/in/paulo-morillo-mu%C3%B1oz-191745143/)
+[Paulo Morillo](https://www.linkedin.com/in/paulo-morillo-mu%C3%B1oz-191745143/)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
