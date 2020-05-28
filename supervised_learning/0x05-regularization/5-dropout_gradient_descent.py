@@ -17,13 +17,12 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
         else:
             g1 = (1 - np.power(A1, 2))
             dz = np.matmul(w['W{}'.format(lay + 1)].T, dz) * g1
+            dz = np.multiply(dz, cache['D{}'.format(lay)]) / keep_prob
         A = cache['A{}'.format(lay - 1)]
-        d = np.random.binomial(1, keep_prob, (A.shape[0], A.shape[1]))
-        nA = np.multiply(A, d)
-        dw = np.matmul(dz, nA.T) / (Y.shape[1])
+        dw = np.matmul(dz, A.T) / (Y.shape[1])
         db = np.sum(dz, axis=1, keepdims=True) / (Y.shape[1])
         fix1 = (db * alpha)
-        fix2 = alpha * ((w['W{}'.format(lay)]) / keep_prob)
+        fix2 = alpha * dw
         if lay < L:
             weights['b{}'.format(lay + 1)] = blast
             weights['W{}'.format(lay + 1)] = wlast
