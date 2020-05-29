@@ -4,7 +4,7 @@
 
 def early_stopping(cost, opt_cost, threshold, patience, count):
     """This method determines if you should stop gradient descent early"""
-    delta = abs(cost - opt_cost)
+    delta = opt_cost - cost
     verify = False
     if delta > threshold:
         count = 0
