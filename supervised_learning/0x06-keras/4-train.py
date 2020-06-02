@@ -12,6 +12,7 @@ def train_model(network, data, labels, batch_size,
     """ This method train a model using mini-batch gradient
         descent
     """
-    return network.fit(data, labels, epochs=epochs,
-                       batch_size=batch_size,
-                       verbose=verbose, shuffle=shuffle)
+    network.fit(data, labels, epochs=epochs,
+                batch_size=batch_size,
+                verbose=verbose, shuffle=shuffle)
+    return network.history
