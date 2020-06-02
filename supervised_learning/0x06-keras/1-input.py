@@ -13,10 +13,12 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     for nodes, activation in zip(layers, activations):
         if count == 0:
             y = K.layers.Dense(nodes, activation=activation,
-                               kernel_regularizer=K.regularizers.l2(lambtha))(input)
+                               kernel_regularizer=K.regularizers.
+                               l2(lambtha))(input)
         else:
             y = K.layers.Dense(nodes, activation=activation,
-                               kernel_regularizer=K.regularizers.l2(lambtha))(x)
+                               kernel_regularizer=K.regularizers.
+                               l2(lambtha))(x)
 
         if count < len(layers) - 1:
             x = K.layers.Dropout(1 - keep_prob)(y)
