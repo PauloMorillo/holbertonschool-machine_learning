@@ -9,9 +9,9 @@ import tensorflow.keras as K
 def build_model(nx, layers, activations, lambtha, keep_prob):
     """This method build a model using keras"""
     count = 0
+    input = K.Input(shape=(nx,))
     for nodes, activation in zip(layers, activations):
         if count == 0:
-            input = K.Input(shape=(nx,))
             y = K.layers.Dense(nodes, activation=activation,
                                kernel_regularizer=K.regularizers.l2(lambtha))(input)
         else:
