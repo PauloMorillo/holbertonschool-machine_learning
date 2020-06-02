@@ -12,16 +12,13 @@ def train_model(network, data, labels, batch_size,
                 epochs, validation_data=None, early_stopping=False,
                 patience=0, verbose=True, shuffle=False):
     """ This method train a model using mini-batch gradient descent"""
-    if early_stopping == True and validation_data is not None:
+    if type(validation_data) is not tuple:
+        validation_data = None
+    if early_stopping is True and validation_data is not None:
         callback = K.callbacks.EarlyStopping(patience=patience)
-        return network.fit(data, labels, epochs=epochs,
-                           batch_size=batch_size,
-                           verbose=verbose, shuffle=shuffle,
-                           validation_data=validation_data,
-                           callbacks=[callback]
-                           )
-    else:
-        return network.fit(data, labels, epochs=epochs,
-                           batch_size=batch_size,
-                           verbose=verbose, shuffle=shuffle,
-                           validation_data=validation_data)
+    return network.fit(data, labels, epochs=epochs,
+                       batch_size=batch_size,
+                       verbose=verbose, shuffle=shuffle,
+                       validation_data=validation_data,
+                       callbacks=callback
+                       )
