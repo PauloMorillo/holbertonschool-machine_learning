@@ -11,7 +11,8 @@ def train_model(network, data, labels, batch_size, epochs,
                 validation_data=None, verbose=True, shuffle=False):
     """ This method train a model using mini-batch gradient descent"""
     if validation_data is not None:
-        return network.fit(data, labels, epochs=epochs,
-                           batch_size=batch_size,
-                           verbose=verbose, shuffle=shuffle,
-                           validation_data=validation_data)
+        network.fit(data, labels, epochs=epochs,
+                    batch_size=batch_size,
+                    verbose=verbose, shuffle=shuffle,
+                    validation_data=validation_data)
+    return network.history
