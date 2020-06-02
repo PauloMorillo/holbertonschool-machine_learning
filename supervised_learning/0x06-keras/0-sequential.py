@@ -13,11 +13,11 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     for nodes, activation in zip(layers, activations):
         if count == 0:
             model.add(K.layers.Dense(nodes, input_shape=(nx,),
-                                         activation=activation,
-                                         kernel_regularizer=K.regularizers.l2(lambtha)))
+                                     activation=activation,
+                                     kernel_regularizer=K.regularizers.l2(lambtha)))
         else:
             model.add(K.layers.Dense(nodes, activation=activation,
-                                         kernel_regularizer=K.regularizers.l2(lambtha)))
+                                     kernel_regularizer=K.regularizers.l2(lambtha)))
 
         if count < len(layers) - 1:
             model.add(K.layers.Dropout(1 - keep_prob))
