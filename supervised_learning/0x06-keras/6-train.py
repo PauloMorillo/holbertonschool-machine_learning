@@ -15,7 +15,7 @@ def train_model(network, data, labels, batch_size,
     if type(validation_data) is not tuple:
         validation_data = None
     if early_stopping is True and validation_data is not None:
-        callback = K.callbacks.EarlyStopping(patience=patience)
+        callback = [K.callbacks.EarlyStopping(patience=patience)]
     else:
         callback = None
     return network.fit(data, labels, epochs=epochs,
