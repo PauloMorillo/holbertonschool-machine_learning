@@ -13,5 +13,5 @@ def train_model(network, data, labels, batch_size,
         descent
     """
     return network.fit(data, labels, epochs=epochs,
-                batch_size=batch_size,
-                verbose=verbose, shuffle=shuffle)
+                       batch_size=batch_size,
+                       verbose=verbose, shuffle=shuffle)
