@@ -7,7 +7,13 @@ import tensorflow.keras as K
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
-    """This method build a model using keras"""
+    """ This method build a model using keras
+        and has nx this is the len of features, layers
+        is a list with the nodes per layer, activations
+        is a list with the activation function per layer
+        lambtha is the first learning rate and keep_prob
+        is the prob of neurons working
+    """
     model = K.Sequential()
     count = 0
     for nodes, activation in zip(layers, activations):
