@@ -21,9 +21,13 @@ def train_model(network, data, labels, batch_size, epochs,
         if learning_rate_decay is True:
             learning_rate_fn = K.optimizers.schedules.InverseTimeDecay(
                 alpha, epochs, decay_rate)
+            optimize_model(network, )
     network.fit(data, labels, epochs=epochs,
                 batch_size=batch_size,
                 verbose=verbose, shuffle=shuffle,
                 validation_data=validation_data,
-                callbacks=[callback]
+                callbacks=[callback, learning_rate_fn]
                 )
+if learning_rate_decay is True:
+            learning_rate_fn = K.optimizers.schedules.InverseTimeDecay(
+                alpha, epochs, decay_rate)
