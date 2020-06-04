@@ -23,8 +23,8 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     cols_im = images.shape[2]
     rows_k = kernel.shape[0]
     cols_k = kernel.shape[1]
-    new_rows = (rows_im - rows_k + 1)
-    new_cols = (cols_im - cols_k + 1)
+    new_rows = (rows_im - rows_k) + 1
+    new_cols = (cols_im - cols_k) + 1
     # print(new_cols, new_rows)
     new = np.ones((images.shape[0], new_rows // stride[0],
                    new_cols // stride[1]))
