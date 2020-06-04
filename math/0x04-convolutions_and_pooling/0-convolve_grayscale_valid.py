@@ -16,7 +16,7 @@ def convolve_grayscale_valid(images, kernel):
     new_rows = (rows_im - rows_k) + 1
     new_cols = (cols_im - cols_k) + 1
     # print(new_cols, new_rows)
-    new = np.ones((images.shape[0], new_cols, new_rows))
+    new = np.ones((images.shape[0], new_rows, new_cols))
     # print(new.shape)
     # print(new)
     for i in range(new.shape[1]):
