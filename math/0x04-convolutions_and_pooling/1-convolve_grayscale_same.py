@@ -26,7 +26,7 @@ def convolve_grayscale_same(images, kernel):
     new_rows = (rows_im - rows_k) + 1
     new_cols = (cols_im - cols_k) + 1
     # print(new_cols, new_rows)
-    new = np.ones((images.shape[0], new_rows, new_cols))
+    new = np.zeros((images.shape[0], new_rows, new_cols))
     # print(new.shape)
     # print(new)
     for i in range(new.shape[1]):
@@ -35,6 +35,6 @@ def convolve_grayscale_same(images, kernel):
             # print(ans.shape)
             # print(ans.T.shape)
             # print(np.sum(ans, axis=2).shape)
-            mat = np.sum(np.sum(ans.T, axis=1), axis=0)
+            mat = np.sum(ans, axis=(1, 2))
             new[:, i, j] = mat
     return new
