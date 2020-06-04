@@ -25,6 +25,6 @@ def convolve_grayscale_valid(images, kernel):
             # print(ans.shape)
             # print(ans.T.shape)
             # print(np.sum(ans, axis=2).shape)
-            mat = np.sum(np.sum(ans.T, axis=1), axis=0)
+            mat = np.sum(ans, axis=(1, 2))
             new[:, i, j] = mat
     return new
