@@ -13,8 +13,8 @@ def convolve_grayscale_valid(images, kernel):
     cols_im = images.shape[2]
     rows_k = kernel.shape[0]
     cols_k = kernel.shape[1]
-    new_rows = rows_im - rows_k + 1
-    new_cols = cols_im - cols_k + 1
+    new_rows = (rows_im - rows_k) + 1
+    new_cols = (cols_im - cols_k) + 1
     # print(new_cols, new_rows)
     new = np.ones((images.shape[0], new_cols, new_rows))
     # print(new.shape)
