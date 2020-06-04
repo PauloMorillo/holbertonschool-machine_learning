@@ -42,7 +42,8 @@ def pool(images, kernel_shape, stride, mode='max'):
                 # print(ans_f[0])
                 new[:, new_r, new_c] = ans_f
             if mode == 'max':
-                ans = np.max(images[:, i:rows_k + i, j:cols_k + j, :])
+                ans = np.max(images[:, i:rows_k + i, j:cols_k + j, :],
+                             axis=(1, 2))
                 new[:, new_r, new_c] = ans
             new_c = new_c + 1
         new_r = new_r + 1

@@ -10,7 +10,7 @@ if __name__ == '__main__':
     dataset = np.load('../../supervised_learning/data/animals_1.npz')
     images = dataset['data']
     print(images.shape)
-    images_pool = pool(images, (2, 2), (2, 2), mode='avg')
+    images_pool = pool(images, (2, 2), (2, 2), mode='max')
     print(images_pool.shape)
 
     plt.imshow(images[0])
