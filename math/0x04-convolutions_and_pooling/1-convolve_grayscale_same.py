@@ -16,14 +16,14 @@ def convolve_grayscale_same(images, kernel):
     output_h = (w - kw) + 1
     # pw = max((output_w - cols_k) * 1 + (cols_k - cols_im), 0)
     # ph = max((rows_im - rows_k) * 1 + (rows_k - rows_im), 0)
-    if h % 2 == 0:
-        ph = h // 2
+    if kh % 2 == 0:
+        ph = kh // 2
     else:
-        ph = (h - 1) // 2
-    if w % 2 == 0:
-        pw = w // 2
+        ph = (kh - 1) // 2
+    if kw % 2 == 0:
+        pw = kw // 2
     else:
-        pw = (w - 1) // 2
+        pw = (kw - 1) // 2
     images = np.pad(images, ((0, 0), (ph, ph), (pw, pw)),
                     'constant', constant_values=0)
 
