@@ -48,7 +48,7 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
             ph = int(np.ceil(((h - 1) * sh + kh - h) / 2) + 1)
             pw = int(np.ceil(((w - 1) * sw + kw - w) / 2) + 1)
             print(ph, pw)
-            images = np.pad(images, ((0, 0), (pt, pb), (pl, pr), (0, 0)),
+            images = np.pad(images, ((0, 0), (ph, ph), (pw, pw), (0, 0)),
                             'constant', constant_values=0)
 
     new = np.ones((images.shape[0], output_h,
