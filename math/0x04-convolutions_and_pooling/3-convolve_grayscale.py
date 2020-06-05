@@ -25,9 +25,11 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
                         'constant', constant_values=0)
     else:
         if padding == "same":
-            print("hola")
+            # print("hola")
             output_h = int(np.ceil(h / stride[0]))
             output_w = int(np.ceil(w / stride[1]))
+            output_w = w
+            output_h = h
             if kh % 2 == 0:
                 pt = kh // 2
                 pb = kh // 2
