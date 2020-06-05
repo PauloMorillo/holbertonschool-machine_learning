@@ -51,7 +51,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
                             'constant', constant_values=0)
 
     new = np.ones((images.shape[0], output_h,
-                   output_w, kernels.shape[0]))  # print(new.shape)
+                   output_w, images.shape[3]))  # print(new.shape)
     # print(new)
     new_r = 0
 
