@@ -57,9 +57,9 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
     # print(new)
     new_r = 0
 
-    for i in range(0, output_h * sh, sh):
+    for i in range(0, output_h, sh):
         new_c = 0
-        for j in range(0, output_w * sw, sw):
+        for j in range(0, output_w, sw):
             ans = images[:, i:kh + i, j:kw + j, :] * kernel
             # print(ans.shape)
             # print(ans.T.shape)
