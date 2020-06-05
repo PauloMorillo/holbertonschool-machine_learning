@@ -11,7 +11,7 @@ if __name__ == '__main__':
     images = dataset['data']
     print(images.shape)
     kernel = np.array([[[0, 0, 0], [-1, -1, -1], [0, 0, 0]], [[-1, -1, -1], [5, 5, 5], [-1, -1, -1]], [[0, 0, 0], [-1, -1, -1], [0, 0, 0]]])
-    images_conv = convolve_channels(images, kernel, padding='same')
+    images_conv = convolve_channels(images, kernel, padding='valid')
     print(images_conv.shape)
 
     plt.imshow(images[0])
