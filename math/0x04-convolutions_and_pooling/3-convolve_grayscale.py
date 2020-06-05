@@ -50,9 +50,9 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
                             'constant', constant_values=0)
             new = np.zeros((images.shape[0], output_h, output_w))
             new_r = 0
-            for i in range(0, output_h, stride[0]):
+            for i in range(0, output_h * stride[0], stride[0]):
                 new_c = 0
-                for j in range(0, output_w, stride[1]):
+                for j in range(0, output_w * stride[1], stride[1]):
                     ans = images[:, i:kh + i, j:kw + j] * kernel
                     # print(ans.shape)
                     # print(ans.T.shape)
