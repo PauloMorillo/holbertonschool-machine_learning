@@ -26,7 +26,7 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
                         'constant', constant_values=0)
     else:
         if padding == "same":
-            # print("hola")
+            print("hola")
             output_h = int(np.ceil(h / sh))
             output_w = int(np.ceil(w / sw))
             output_w = w
