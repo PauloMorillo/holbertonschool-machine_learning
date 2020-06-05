@@ -14,20 +14,21 @@ def train_model(network, data, labels, batch_size, epochs,
                 patience=0, learning_rate_decay=False, alpha=0.1,
                 decay_rate=1, verbose=True, shuffle=False):
     """ This method train a model using mini-batch gradient descent"""
-    callback = None
-    if validation_data is not None:
-        if early_stopping is True:
-            callback = K.callbacks.EarlyStopping(patience=patience)
-        if learning_rate_decay is True:
-            learning_rate_fn = K.optimizers.schedules.InverseTimeDecay(
-                alpha, epochs, decay_rate)
-            optimize_model(network, )
-    network.fit(data, labels, epochs=epochs,
-                batch_size=batch_size,
-                verbose=verbose, shuffle=shuffle,
-                validation_data=validation_data,
-                callbacks=[callback, learning_rate_fn]
-                )
-if learning_rate_decay is True:
-            learning_rate_fn = K.optimizers.schedules.InverseTimeDecay(
-                alpha, epochs, decay_rate)
+    def decay(epoch):
+        """ This method create the alpha"""
+        return alpha / (1 + decay_rate * epoch)
+    callback = []
+    if type(validation_data) is not tuple:
+        validation_data = None
+    if early_stopping is True and validation_data is not None:
+        callback += [K.callbacks.EarlyStopping(patience=patience)]
+    if learning_rate_decay is True:
+        callback += [K.callbacks.LearningRateScheduler(decay, verbose=1)]
+    if early_stopping is not True and validation_data is None:
+        callback = None
+    return network.fit(data, labels, epochs=epochs,
+                       batch_size=batch_size,
+                       verbose=verbose, shuffle=shuffle,
+                       validation_data=validation_data,
+                       callbacks=callback
+                       )
