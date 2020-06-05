@@ -27,7 +27,6 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
                         'constant', constant_values=0)
     else:
         if padding == "same":
-            print("hola")
             output_h = int(np.ceil(h / sh))
             output_w = int(np.ceil(w / sw))
             output_w = w
@@ -46,9 +45,10 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
                 pw = max((output_w - 1) * stride[1] + kw - w, 0)
                 pl = pw // 2
                 pr = pw - pl
-            ph = int((((h - 1) * sh + kh - h) / 2) + 1)
-            pw = int((((w - 1) * sw + kw - w) / 2) + 1)
-            images = np.pad(images, ((0, 0), (ph, ph), (pw, pw)),
+            ph = int(np.ceil(((h - 1) * sh + kh - h) / 2) + 1)
+            pw = int(np.ceil(((w - 1) * sw + kw - w) / 2) + 1)
+            print(ph, pw)
+            images = np.pad(images, ((0, 0), (pt, pb), (pl, pr), (0, 0)),
                             'constant', constant_values=0)
 
     new = np.ones((images.shape[0], output_h,
@@ -57,9 +57,9 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
     # print(new)
     new_r = 0
 
-    for i in range(0, output_h, sh):
+    for i in range(0, output_h * sh, sh):
         new_c = 0
-        for j in range(0, output_w, sw):
+        for j in range(0, output_w * sw, sw):
             ans = images[:, i:kh + i, j:kw + j, :] * kernel
             # print(ans.shape)
             # print(ans.T.shape)
