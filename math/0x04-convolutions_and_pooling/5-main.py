@@ -14,14 +14,14 @@ if __name__ == '__main__':
                        [[[-1, 1, 0], [-1, 1, 0], [-1, 1, 0]], [[5, 0, 0], [5, 0, 0], [5, 0, 0]], [[-1, -1, 0], [-1, -1, 0], [-1, -1, 0]]],
                        [[[0, 1, -1], [0, 1, -1], [0, 1, -1]], [[-1, 0, -1], [-1, 0, -1], [-1, 0, -1]], [[0, -1, -1], [0, -1, -1], [0, -1, -1]]]])
 
-    images_conv = convolve(images, kernels, padding='same')
+    images_conv = convolve(images, kernels, padding='valid')
     print(images_conv.shape)
 
-    plt.imshow(images[3])
+    plt.imshow(images[0])
     plt.show()
-    plt.imshow(images_conv[3, :, :, 0])
+    plt.imshow(images_conv[0, :, :, 0])
     plt.show()
-    plt.imshow(images_conv[3, :, :, 1])
+    plt.imshow(images_conv[0, :, :, 1])
     plt.show()
-    plt.imshow(images_conv[3, :, :, 2])
+    plt.imshow(images_conv[0, :, :, 2])
     plt.show()
