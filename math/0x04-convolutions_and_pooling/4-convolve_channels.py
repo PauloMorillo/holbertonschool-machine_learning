@@ -63,7 +63,7 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
             # print(ans.shape)
             # print(ans.T.shape)
             # print(np.sum(ans, axis=2).shape)
-            mat = np.sum(np.sum(ans, axis=1), axis=2)
+            mat = np.sum(ans, axis=(1, 3))
             # print(mat.shape)
             new[:, new_r, new_c] = np.sum(mat, axis=1)
             new_c = new_c + 1
