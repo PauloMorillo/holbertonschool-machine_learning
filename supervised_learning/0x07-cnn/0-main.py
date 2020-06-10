@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     plt.imshow(X_train[0])
     plt.show()
-    A = conv_forward(X_train_c, W, b, relu, padding='valid')
+    A = conv_forward(X_train_c, W, b, relu, padding='same')
     print(A.shape)
     plt.imshow(A[0, :, :, 0])
     plt.show()
