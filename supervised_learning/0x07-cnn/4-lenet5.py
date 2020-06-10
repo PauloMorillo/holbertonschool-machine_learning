@@ -9,16 +9,18 @@ def lenet5(x, y):
     """
     x is the images and y are the labels
     """
-    conv1 = tf.layers.Conv2D(6, (5, 5), padding="same")
+    kernel = tf.contrib.layers.variance_scaling_initializer()
+    conv1 = tf.layers.Conv2D(6, (5, 5), padding="same", activation='relu',
+                             kernel_initializer=kernel)
     c = conv1(x)
     pool1 = tf.layers.MaxPooling2D((2, 2), (2, 2))
     p = pool1(c)
-    conv2 = tf.layers.Conv2D(16, (5, 5), padding="valid")
+    conv2 = tf.layers.Conv2D(16, (5, 5), padding="valid", activation='relu',
+                             kernel_initializer=kernel)
     c2 = conv2(p)
     pool2 = tf.layers.MaxPooling2D((2, 2), (2, 2))
     p2 = pool2(c2)
     out = tf.layers.Flatten()(p2)
-    kernel = tf.contrib.layers.variance_scaling_initializer()
     lay1 = tf.layers.Dense(120, activation='relu', kernel_initializer=kernel)
     y1 = lay1(out)
     lay2 = tf.layers.Dense(84, activation='relu', kernel_initializer=kernel)
