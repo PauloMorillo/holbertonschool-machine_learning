@@ -9,7 +9,7 @@ def lenet5(x, y):
     """
     x is the images and y are the labels
     """
-    kernel = tf.contrib.layers.variance_scaling_initializer()
+    kernel = tf.contrib.layers.variance_scaling_initializer(mode='FAN_AVG')
     conv1 = tf.layers.Conv2D(6, (5, 5), padding="same", activation='relu',
                              kernel_initializer=kernel)
     c = conv1(x)
