@@ -9,7 +9,7 @@ def lenet5(x, y):
     """
     x is the images and y are the labels
     """
-    kernel = tf.contrib.layers.variance_scaling_initializer(mode='FAN_AVG')
+    kernel = tf.contrib.layers.variance_scaling_initializer()
     conv1 = tf.layers.Conv2D(6, (5, 5), padding="same", activation='relu',
                              kernel_initializer=kernel)
     c = conv1(x)
@@ -25,11 +25,10 @@ def lenet5(x, y):
     y1 = lay1(out)
     lay2 = tf.layers.Dense(84, activation='relu', kernel_initializer=kernel)
     y2 = lay2(y1)
-    lay3 = tf.layers.Dense(10, activation=None, kernel_initializer=kernel)
-    y_pred = lay3(y2)
+    y_pred = tf.layers.Dense(10, kernel_initializer=kernel)(y2)
     loss = tf.losses.softmax_cross_entropy(y, y_pred)
     correc = tf.equal(tf.argmax(y, 1), tf.argmax(y_pred, 1))
     accu = tf.reduce_mean(tf.cast(correc, tf.float32))
     operation = tf.train.AdamOptimizer()
     train = operation.minimize(loss)
-    return y_pred, train, loss, accu
+    return tf.nn.softmax(y_pred), train, loss, accu
