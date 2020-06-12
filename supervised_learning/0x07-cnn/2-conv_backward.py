@@ -69,5 +69,6 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                         * dZ[im, h, w, c]
     db[0, 0, 0] = np.sum(dZ, axis=(0, 1, 2))
     if padding == "same":
+        print("hola")
         da = da[:, ph:A_prev.shape[1] - ph, pw:A_prev.shape[2] - pw, :]
     return da, dw, db
