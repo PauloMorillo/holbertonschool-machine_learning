@@ -12,6 +12,6 @@ if __name__ == "__main__":
 
     W = np.random.randn(3, 3, 1, 2)
     b = np.random.randn(1, 1, 1, 2)
-
+    np.random.seed(0)
     dZ = np.random.randn(10, h - 2, w - 2, 2)
-    print(conv_backward(dZ, X_train_c, W, b, padding="valid"))
+    print(conv_backward(dZ, X_train_c, W, b, padding="same", stride=(2,2)))
