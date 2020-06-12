@@ -62,13 +62,12 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         for h in range(h_new):
             for w in range(w_new):
                 for c in range(c_new):
-                    da[im, h * sh:(h * sh) + kh, w * sw:(w * sw) + kw] += \
+                    da[im, h * sh:h * sh + kh, w * sw:w * sw + kw] += \
                         W[:, :, :, c] * dZ[im, h, w, c]
                     dw[:, :, :, c] += \
-                        A_prev[im, h * sh:(h * sh) + kh, w * sw:(w * sw) + kw]\
+                        A_prev[im, h * sh:h * sh + kh, w * sw:w * sw + kw]\
                         * dZ[im, h, w, c]
-    db[0, 0, 0] = np.sum(dZ, axis=(0, 1, 2))
+    db[:, :, 0] = np.sum(dZ, axis=(0, 1, 2))
     if padding == "same":
-        print("hola")
         da = da[:, ph:A_prev.shape[1] - ph, pw:A_prev.shape[2] - pw, :]
     return da, dw, db
