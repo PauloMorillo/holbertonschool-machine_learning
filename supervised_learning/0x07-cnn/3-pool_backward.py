@@ -37,7 +37,7 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
     for im in range(m):
         for h in range(h_new):
             for w in range(w_new):
-                for c in range(c_new):
+                for c in range(c):
                     if mode == "max":
                         f[:, :] = dA[im, h, w, c]
                     if mode == "avg":
