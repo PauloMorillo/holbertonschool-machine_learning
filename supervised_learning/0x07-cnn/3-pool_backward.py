@@ -42,9 +42,9 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
                         # print("hello")
                         f = np.amax(A_prev[im, h * sh:h * sh + kh,
                                     w * sw:w * sw + kw, c])
-                        f = dA[im, h, w, c] *\
+                        f = dA[im, h, w, c] * \
                             (f == A_prev[im, h * sh:h * sh + kh,
-                                  w * sw:w * sw + kw, c])
+                                         w * sw:w * sw + kw, c])
                     if mode == "avg":
                         f = f * (dA[im, h, w, c] / (kh * kw))
                     da_prev[im, h * sh:h * sh + kh, w * sw:w * sw + kw, c] += f
