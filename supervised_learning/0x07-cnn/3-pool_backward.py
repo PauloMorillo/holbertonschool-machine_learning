@@ -39,8 +39,9 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
                 for c in range(c_new):
                     f = np.ones((kh, kw))
                     if mode == "max":
-                        print("hello")
-                        f = f * dA[im, h, w, c]
+                        # print("hello")
+                        f = np.zeros((kh,kw))
+                        f[:, :] = dA[im, h, w, c]
                     if mode == "avg":
                         f = f * (dA[im, h, w, c] / (kh * kw))
                     da_prev[im, h * sh:h * sh + kh, w * sw:w * sw + kw, c] += f
