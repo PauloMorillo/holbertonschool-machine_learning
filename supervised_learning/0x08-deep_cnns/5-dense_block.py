@@ -20,4 +20,4 @@ def dense_block(X, nb_filters, growth_rate, layers):
                                padding="same",
                                kernel_initializer=kernel)(act2)
         X = K.layers.concatenate([X, con2])
-    return X, 1
+    return X, X.shape[-1]
