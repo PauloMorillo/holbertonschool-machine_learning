@@ -16,7 +16,6 @@ def transition_layer(X, nb_filters, compression):
     norm1 = K.layers.BatchNormalization()(X)
     act1 = K.layers.Activation("relu")(norm1)
     filt = int(nb_filters * compression)
-    print(filt)
     con1 = K.layers.Conv2D(filt, (1, 1),
                            padding="same",
                            kernel_initializer=kernel)(act1)
