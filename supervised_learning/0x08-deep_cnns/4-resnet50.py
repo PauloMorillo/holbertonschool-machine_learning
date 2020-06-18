@@ -35,12 +35,11 @@ def resnet50():
     Y11 = identity_block(Y10, [256, 256, 1024])
     Y12 = identity_block(Y11, [256, 256, 1024])
     Y13 = identity_block(Y12, [256, 256, 1024])
-    Y14 = identity_block(Y13, [256, 256, 1024])
 
-    Y15 = projection_block(Y14, [512, 512, 2048])
+    Y14 = projection_block(Y13, [512, 512, 2048])
+    Y15 = identity_block(Y14, [512, 512, 2048])
     Y16 = identity_block(Y15, [512, 512, 2048])
-    Y17 = identity_block(Y16, [512, 512, 2048])
-    Y18 = K.layers.AveragePooling2D(7)(Y17)
-    last_lay = K.layers.Dense(1000, activation='softmax')(Y18)
+    Y17 = K.layers.AveragePooling2D(7)(Y16)
+    last_lay = K.layers.Dense(1000, activation='softmax')(Y17)
     model = K.models.Model(inputs=X, outputs=last_lay)
     return model
