@@ -148,7 +148,7 @@ class Yolo():
             # or height. That’s why
             # we take the exponent of the predicted number."
             b_wh = (np.exp(t_wh) /
-                    self.model.input_shape[:2]) * self.anchors[i]
+                    self.model.input_shape[1:3]) * self.anchors[i]
 
             bx = b_xy[:, :, :, :1]
             by = b_xy[:, :, :, 1:2]
