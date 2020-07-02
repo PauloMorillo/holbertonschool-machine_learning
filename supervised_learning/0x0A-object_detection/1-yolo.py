@@ -5,6 +5,7 @@ import tensorflow.keras as K
 
 
 def _sigmoid(x):
+    """ This method calculates sigmoid function"""
     return 1. / (1. + np.exp(-x))
 
 
@@ -145,7 +146,7 @@ class Yolo():
             # it does not make sense for the box to have a negative width
             # or height. That’s why
             # we take the exponent of the predicted number."
-            b_wh = (np.exp(t_wh) / 416) * self.anchors[i]
+            b_wh = (np.exp(t_wh) / self.model.input_shape[:2]) * self.anchors[i]
 
             bx = b_xy[:, :, :, :1]
             by = b_xy[:, :, :, 1:2]
