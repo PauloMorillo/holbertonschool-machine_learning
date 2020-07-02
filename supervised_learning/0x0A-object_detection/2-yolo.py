@@ -167,7 +167,6 @@ class Yolo():
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
         """ This method filter the boxes """
         v_boxes, v_labels, v_scores = [], [], []
-        # enumerate all boxes
         for i in range(len(boxes)):
             a, b, c, d = boxes[i].shape
             resha = boxes[i].reshape(a * b * c, d)
@@ -175,12 +174,13 @@ class Yolo():
             resha_conf = box_confidences[i].reshape(a * b * c, d)
             a, b, c, d = box_class_probs[i].shape
             resha_probs = box_class_probs[i].reshape(a * b * c, d)
-            # print(resha)
             for box in range(len(resha)):
-                if resha_conf[box] > self.class_t:
-                    v_boxes = np.concatenate([v_boxes, resha[box]], axis=-1)
-                    pos = np.argmax(resha_probs[box])
+                pos = np.argmax(resha_probs[box])
+                score = resha_probs[box][pos] * resha_conf[box]
+                if score > self.class_t:
+                    v_boxes = np.concatenate([v_boxes, resha[box]])
                     v_labels = np.concatenate([v_labels, [pos]], axis=-1)
-                    mul = resha_probs[box][pos] * resha_conf[box]
-                    v_scores = np.concatenate([v_scores, mul])
+                    v_scores = np.concatenate([v_scores, score])
+        filas = v_boxes.shape[0] // 4
+        v_boxes = v_boxes.reshape(filas, 4)
         return v_boxes, v_labels.astype(int), v_scores
