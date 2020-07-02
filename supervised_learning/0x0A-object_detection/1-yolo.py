@@ -2,6 +2,7 @@
 """ This module has the Yolo class """
 
 import tensorflow.keras as K
+import numpy as np
 
 
 def _sigmoid(x):
@@ -146,7 +147,8 @@ class Yolo():
             # it does not make sense for the box to have a negative width
             # or height. That’s why
             # we take the exponent of the predicted number."
-            b_wh = (np.exp(t_wh) / self.model.input_shape[:2]) * self.anchors[i]
+            b_wh = (np.exp(t_wh) /
+                    self.model.input_shape[:2]) * self.anchors[i]
 
             bx = b_xy[:, :, :, :1]
             by = b_xy[:, :, :, 1:2]
