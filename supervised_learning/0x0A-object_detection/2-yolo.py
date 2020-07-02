@@ -166,7 +166,7 @@ class Yolo():
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
         """ This method filter the boxes """
-        v_boxes, v_labels, v_scores = list(), list(), list()
+        v_boxes, v_labels, v_scores = [], [], []
         # enumerate all boxes
         for i in range(len(boxes)):
             a, b, c, d = boxes[i].shape
@@ -177,16 +177,10 @@ class Yolo():
             resha_probs = box_class_probs[i].reshape(a * b * c, d)
             # print(resha)
             for box in range(len(resha)):
-                # enumerate all possible labels
-                # check if the threshold for this label is high enough
                 if resha_conf[box] > self.class_t:
-                    v_boxes.append(list(resha[box]))
+                    v_boxes = np.concatenate([v_boxes, resha[box]], axis=-1)
                     pos = np.argmax(resha_probs[box])
-                    v_labels.append(pos)
+                    v_labels = np.concatenate([v_labels, [pos]], axis=-1)
                     mul = resha_probs[box][pos] * resha_conf[box]
-                    v_scores.append(mul.item(0))
-                    # print(resha_probs[box][:30])
-                    # break;
-                    # print(resha_probs[pos])
-                    # don't break, many labels may trigger for one box
-        return v_boxes, v_labels, v_scores
+                    v_scores = np.concatenate([v_scores, mul])
+        return v_boxes, v_labels.astype(int), v_scores
