@@ -199,7 +199,6 @@ class Yolo():
         """ Prepocees images to posterior use with darknet"""
         resized = []
         dims = self.model.input_shape[1:3]
-        # dims = (416, 416)
         for img in images:
             resized.append(cv2.resize(img, dims,
                                       interpolation=cv2.INTER_CUBIC) / 255)
