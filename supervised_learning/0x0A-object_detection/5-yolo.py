@@ -196,7 +196,7 @@ class Yolo():
         return images, paths
 
     def preprocess_images(self, images):
-        """ Prepocees images to posterior use with darknet"""
+        """ Preprocess images to posterior use with darknet"""
         resized = []
         dims = self.model.input_shape[1:3]
         for img in images:
