@@ -187,7 +187,8 @@ class Yolo():
         v_boxes = v_boxes.reshape(filas, 4)
         return v_boxes, v_labels.astype(int), v_scores
 
-    def load_images(self, folder_path):
+    @staticmethod
+    def load_images(folder_path):
         """ This method load an image """
         images = [cv2.imread(file)
                   for file in glob.glob(folder_path + '/*.jpg')]
