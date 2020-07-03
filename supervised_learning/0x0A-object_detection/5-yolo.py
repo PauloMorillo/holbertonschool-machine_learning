@@ -193,7 +193,6 @@ class Yolo():
         images = [cv2.imread(file)
                   for file in glob.glob(folder_path + '/*.jpg')]
         paths = [file for file in glob.glob(folder_path + '/*.jpg')]
-        print(paths[0])
         return images, paths
 
     def preprocess_images(self, images):
