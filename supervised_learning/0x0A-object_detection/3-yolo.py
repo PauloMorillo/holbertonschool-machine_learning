@@ -1,8 +1,12 @@
+#!/usr/bin/env python3
+""" This module has the Yolo class """
+
 import tensorflow.keras as K
 import tensorflow as tf
 
 
 def _sigmoid(x):
+    """ This method calculates sigmoid function"""
     return 1. / (1. + np.exp(-x))
 
 
