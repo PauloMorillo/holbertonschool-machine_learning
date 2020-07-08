@@ -11,6 +11,5 @@ import dlib
 class FaceAlign():
     def __init__(self, shape_predictor_path):
         """ All begins here """
-        print(shape_predictor_path)
-        sp = dlib.shape_predictor(shape_predictor_path)
-        return sp
+        self.detector = dlib.get_frontal_face_detector()
+        self.shape_predictor = dlib.shape_predictor(shape_predictor_path)
