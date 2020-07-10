@@ -109,52 +109,37 @@ class Yolo():
         return v_boxes, v_labels.astype(int), v_scores
 
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
-        """
-        This method return the real boxes, scores, classes predicted
-        """
+        """ This method return the real boxes, scores, classes predicted """
         if len(filtered_boxes) == 0:
             return []
-        pick = []
         x1 = filtered_boxes[:, 0]
         y1 = filtered_boxes[:, 1]
         x2 = filtered_boxes[:, 2]
         y2 = filtered_boxes[:, 3]
-        area = (x2 - x1) * (y2 - y1)
-        # idxs = np.argsort(y2)
-        ind = np.lexsort((box_scores, -box_classes))
-
-        keep_idx = []
-        del_idx = []
-        classes = np.unique(box_classes)
-        for c in classes:
-            class_boxes = np.where(box_classes == c)[0]
-            idxs = np.argsort(box_scores[class_boxes])[::-1]
-            while len(idxs) > 0:
-                keep_idx.append(class_boxes[idxs[0]])
+        ind = np.lexsort((-box_scores, box_classes))
+        _, class_count = np.unique(box_classes, return_counts=True)
+        i = 0
+        keep_i = []
+        for c in class_count:
+            c_boxes = ind[i:i + c]
+            while len(c_boxes):
+                fix = c_boxes[0]
+                keep_i += [fix]
+                c_boxes = c_boxes[1:]
                 keep_tmp = []
-                i = idxs[0]
-                del_idx = [0]
-                aux = 0
-                for j in idxs[1:]:
-                    xA = max(x1[i], x1[j])
-                    yA = max(y1[i], y1[j])
-                    xB = min(x2[i], x2[j])
-                    yB = min(y2[i], y2[j])
-
+                for b in c_boxes:
+                    xA = max(x1[fix], x1[b])
+                    yA = max(y1[fix], y1[b])
+                    xB = min(x2[fix], x2[b])
+                    yB = min(y2[fix], y2[b])
                     interArea = max(0, xB - xA) * max(0, yB - yA)
-                    boxAArea = (x2[i] - x1[i]) * (y2[i] - y1[i])
-                    boxBArea = (x2[j] - x1[j]) * (y2[j] - y1[j])
-
+                    boxAArea = (x2[fix] - x1[fix]) * (y2[fix] - y1[fix])
+                    boxBArea = (x2[b] - x1[b]) * (y2[b] - y1[b])
                     overlap = interArea / ((boxAArea + boxBArea) - interArea)
-
                     if overlap > self.nms_t:
-                        aux += 1
-                        del_idx.append(aux)
-                        # keep_tmp.append(j)
-
-                # idxs = keep_tmp
-                idxs = np.delete(idxs, aux)
-                # keep_idx += list(class_boxes[keep_tmp])
-        return (filtered_boxes[keep_idx],
-                box_classes[keep_idx],
-                box_scores[keep_idx])
+                        pass
+                    else:
+                        keep_tmp += [b]
+                c_boxes = keep_tmp
+            i += c
+        return filtered_boxes[keep_i], box_classes[keep_i], box_scores[keep_i]
