@@ -5,6 +5,7 @@ import tensorflow.keras as K
 import tensorflow as tf
 import numpy as np
 
+
 def _sigmoid(x):
     """ This method calculates sigmoid function"""
     return 1. / (1. + np.exp(-x))
