@@ -90,6 +90,6 @@ def inverse(matrix):
                             row.append(matrix[i][j])
                     if len(row) > 0:
                         new_ma.append(row)
-                minor_row.append(((-1) ** (i0 + j0)) * float(determinant(new_ma)))
+                minor_row.append(((-1) ** (i0 + j0)) * determinant(new_ma))
             minor_mat.append(minor_row)
         return transpose(minor_mat, det)
