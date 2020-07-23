@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This module has the method minor(matrix)
+This module has the method cofactor(matrix)
 """
 
 
@@ -42,7 +42,7 @@ def determinant(matrix):
 
 def cofactor(matrix):
     """
-    This method calculates the minor of a matrix
+    This method calculates the minor with cofactor of a matrix
     """
     if type(matrix) is not list \
             or len(matrix) < 1 or \
