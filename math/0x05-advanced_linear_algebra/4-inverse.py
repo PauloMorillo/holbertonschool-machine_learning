@@ -43,7 +43,7 @@ def determinant(matrix):
 
 def transpose(matrix, inv):
     """This method give the real adjugate"""
-    return [[matrix[j][i] * inv for j in range(len(matrix[i]))]
+    return [[float(matrix[j][i]) / inv for j in range(len(matrix[i]))]
             for i in range(len(matrix))]
 
 
@@ -67,20 +67,17 @@ def inverse(matrix):
     det = determinant(matrix)
     if det == 0:
         return None
-    inv = 1 / det
-
     if rows_length is 1:
         if len(matrix[0]) is 1:
-            return [[1 * inv]]
+            return [[1 / det]]
         return matrix[0][0]
     elif rows_length is 2:
         a = matrix[0][0]
         b = matrix[0][1]
         c = matrix[1][0]
         d = matrix[1][1]
-        return transpose([[d, -c], [-b, a]], inv)
+        return transpose([[d, -c], [-b, a]], det)
     else:
-        det = 0
         minor_mat = []
         for i0 in range(len(matrix)):
             minor_row = []
@@ -93,6 +90,6 @@ def inverse(matrix):
                             row.append(matrix[i][j])
                     if len(row) > 0:
                         new_ma.append(row)
-                minor_row.append(((-1) ** (i0 + j0)) * determinant(new_ma))
+                minor_row.append(((-1) ** (i0 + j0)) * float(determinant(new_ma)))
             minor_mat.append(minor_row)
-        return transpose(minor_mat, inv)
+        return transpose(minor_mat, det)
