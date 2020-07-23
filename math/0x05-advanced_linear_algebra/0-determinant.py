@@ -14,6 +14,7 @@ def determinant(matrix):
         raise TypeError('matrix must be a list of lists')
 
     rows_length = len(matrix)
+
     for row in matrix:
         if len(row) is not rows_length and len(row) is not 0:
             raise ValueError('matrix must be a square matrix')
