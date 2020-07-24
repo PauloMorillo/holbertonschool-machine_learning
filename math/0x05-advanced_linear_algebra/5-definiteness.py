@@ -17,6 +17,9 @@ def definiteness(matrix):
         return None
     if matrix.shape[0] is not matrix.shape[1]:
         return None
+    transpose = np.transpose(matrix)
+    if not np.array_equal(transpose, matrix):
+        return None
     eigen_val, eigen_vec = np.linalg.eig(matrix)
     pos_positive = np.where(eigen_val > 0)
     pos_negative = np.where(eigen_val < 0)
@@ -25,11 +28,10 @@ def definiteness(matrix):
     # print(pos_positive)
     if len(pos_positive[0]) == len(eigen_val):
         return 'Positive definite'
-    elif len(pos_negative[0]) == len(eigen_val):
+    if len(pos_negative[0]) == len(eigen_val):
         return 'Negative definite'
-    elif len(pos_negative[0]) > 0 and len(pos_zeros[0]) > 0:
+    if len(pos_negative[0]) > 0 and len(pos_zeros[0]) > 0:
         return 'Negative semi-definite'
-    elif len(pos_positive[0]) > 0 and len(pos_zeros[0]) > 0:
+    if len(pos_positive[0]) > 0 and len(pos_zeros[0]) > 0:
         return 'Positive semi-definite'
-    else:
-        return 'Indefinite'
+    return 'Indefinite'
