@@ -27,8 +27,8 @@ def definiteness(matrix):
         return 'Positive definite'
     if len(pos_negative[0]) == len(eigen_val):
         return 'Negative definite'
-    if len(pos_positive[0]) > 0 and len(pos_zeros[0]) > 0:
-        return 'Positive semi-definite'
     if len(pos_negative[0]) > 0 and len(pos_zeros[0]) > 0:
         return 'Negative semi-definite'
+    if len(pos_positive[0]) > 0 and len(pos_zeros[0]) > 0:
+        return 'Positive semi-definite'
     return 'Indefinite'
