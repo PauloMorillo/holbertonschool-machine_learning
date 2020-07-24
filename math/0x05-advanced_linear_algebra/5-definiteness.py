@@ -13,7 +13,7 @@ def definiteness(matrix):
 
     if type(matrix) is not np.ndarray:
         raise TypeError('matrix must be a numpy.ndarray')
-    if len(matrix.shape) < 2:
+    if len(matrix.shape) is not 2:
         return None
     if matrix.shape[0] is not matrix.shape[1]:
         return None
