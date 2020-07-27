@@ -11,7 +11,7 @@ def mean_cov(X):
         raise TypeError('X must be a 2D numpy.ndarray')
     if X.shape[0] < 2:
         raise ValueError('X must contain multiple data points')
-    mean_m = np.mean(X.T, axis=1)
+    mean_m = np.array([np.mean(X.T, axis=1)])
     resta = X - mean_m
     covar = np.dot(X.T, resta) / (X.shape[0] - 1)
     return mean_m, covar
