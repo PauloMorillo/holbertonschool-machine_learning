@@ -6,6 +6,6 @@ if __name__ == '__main__':
 
     np.random.seed(0)
     X = np.random.multivariate_normal([12, 30, 10], [[36, -30, 15], [-30, 100, -20], [15, -20, 25]], 10000)
-    mean, cov = mean_cov(X)
+    mean, cov = mean_cov(np.array([[1], [1]]))
     print(mean)
     print(cov)
