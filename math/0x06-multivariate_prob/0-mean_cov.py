@@ -13,5 +13,5 @@ def mean_cov(X):
         raise ValueError('X must contain multiple data points')
     mean_m = np.mean(X.T, axis=1)
     resta = X - mean_m
-    covar = np.dot(resta.T, resta) / (X.shape[0] - 1)
+    covar = np.dot(X.T, resta) / (X.shape[0] - 1)
     return mean_m, covar
