@@ -6,7 +6,8 @@ import numpy as np
 
 def mean_cov(X):
     """This function calculates mean and covariance"""
-    if len(X.shape) is not 2:
+
+    if type(X) is not np.ndarray and len(X.shape) is not 2:
         raise TypeError('X must be a 2D numpy.ndarray')
     if X.shape[0] < 2:
         raise ValueError('X must contain multiple data points')
