@@ -9,6 +9,6 @@ def correlation(C):
 
     if type(C) is not np.ndarray:
         raise TypeError('C must be a numpy.ndarray')
-    if C.shape[0] is not C.shape[1]:
+    if len(C.shape) < 2 or C.shape[0] is not C.shape[1]:
         raise ValueError('C must be a 2D square matrix')
     return C / np.sqrt(np.outer(np.diagonal(C), np.diagonal(C)))
