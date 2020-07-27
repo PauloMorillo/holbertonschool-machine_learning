@@ -7,8 +7,8 @@ import numpy as np
 def correlation(C):
     """This function calculates correlation"""
 
-    if type(C) is not np.ndarray or np.ndim(C) is not 2:
+    if type(C) is not np.ndarray:
         raise TypeError('C must be a numpy.ndarray')
-    if len(C.shape) or C.shape[0] is not C.shape[1]:
+    if C.shape[0] is not C.shape[1]:
         raise ValueError('C must be a 2D square matrix')
     return C / np.sqrt(np.outer(np.diagonal(C), np.diagonal(C)))
