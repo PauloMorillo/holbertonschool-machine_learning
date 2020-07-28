@@ -1,26 +1,51 @@
 #!/usr/bin/env python3
-"""This module has the class MultiNormal"""
-
+"""
+Multivariate Normal distribution
+"""
 import numpy as np
+
+
+def mean_cov(X):
+    """
+    Calculates the mean and covariance of a data set
+    :param X: numpy.ndarray of shape (n, d) containing the data set
+    :return: mean, cov
+    """
+    d = X.shape[0]
+    n = X.shape[1]
+    mean = np.mean(X, axis=1).reshape(d, 1)
+    X = X - mean
+    cov = ((np.dot(X, X.T)) / (n - 1))
+    return mean, cov
 
 
 class MultiNormal():
     """
-    This class represents a Multivariate Normal distribution
+    Multinormal Class
     """
 
     def __init__(self, data):
-        """All begins here"""
-        if type(data) is not np.ndarray or np.ndim(data) is not 2:
+        """
+        class constructor
+        :param data: numpy.ndarray of shape (d, n) containing the data set:
+            n is the number of data points
+            d is the number of dimensions in each data point
+        """
+        if type(data) is not np.ndarray or len(data.shape) is not 2:
             raise TypeError('data must be a 2D numpy.ndarray')
-        if data.shape[1] < 2:
+        n = data.shape[1]
+        if n < 2:
             raise ValueError('data must contain multiple data points')
-        self.mean = np.array([np.mean(data, axis=1)]).T
-        resta = data - self.mean
-        self.cov = np.dot(data, resta.T) / (data.shape[1] - 1)
+        self.mean, self.cov = mean_cov(data)
 
     def pdf(self, x):
-        """This method calculates the PDF at a data point"""
+        """
+        calculates the PDF at a data point
+        :param x: x is a numpy.ndarray of shape (d, 1) containing the data
+        point whose PDF should be calculated
+            d is the number of dimensions of the Multinomial instance
+        :return: the value of the PDF
+        """
         if x is None or type(x) is not np.ndarray:
             raise TypeError('x must be a numpy.ndarray')
         d = self.cov.shape[0]
