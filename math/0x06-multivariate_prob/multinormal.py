@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """This module has the class MultiNormal"""
 
-
 import numpy as np
+
 
 class MultiNormal():
     """
     This class represents a Multivariate Normal distribution
     """
+
     def __init__(self, data):
         """All begins here"""
         if type(data) is not np.ndarray or np.ndim(data) is not 2:
