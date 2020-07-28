@@ -24,7 +24,8 @@ class MultiNormal():
         if type(x) is not np.ndarray:
             raise TypeError('x must by a numpy.ndarray')
         d = self.cov.shape[0]
-        if len(x.shape) is not 2 or x.shape[1] is not 1:
+        if len(x.shape) is not 2 or x.shape[0] is not d or \
+                x.shape[1] is not 1:
             raise ValueError('x mush have the shape ({}, 1)'.format(d))
         mean = self.mean
         cov = self.cov
