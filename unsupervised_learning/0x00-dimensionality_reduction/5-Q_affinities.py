@@ -18,5 +18,5 @@ def Q_affinities(Y):
     np.fill_diagonal(Di, 0)
     num = 1 / (1 + Di)
     np.fill_diagonal(num, 0)
-    Qi = num / np.sum(np.exp(-Di))
+    Qi = num / np.sum(num)
     return Qi, num
