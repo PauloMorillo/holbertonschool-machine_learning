@@ -22,10 +22,5 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
     Returns: P, a numpy.ndarray of shape (n, n) containing the symmetric
     P affinities
     """
-    sum_Y = np.sum(np.square(Y), 1)
-    Di = np.add(np.add(-2 * np.dot(Y, Y.T), sum_Y).T, sum_Y)
-    np.fill_diagonal(Di, 0)
-    num = 1 / (1 + Di)
-    np.fill_diagonal(num, 0)
-    Qi = num / np.sum(num)
-    return Qi
+    P = X
+    return P
