@@ -1,4 +1,4 @@
-# !/usr/bin/env python3
+#!/usr/bin/env python3
 """
 Marginal Probability marginal(x, n, P, Pr)
 """
