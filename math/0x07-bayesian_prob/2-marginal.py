@@ -1,6 +1,6 @@
 # !/usr/bin/env python3
 """
-Marginal Probability
+Marginal Probability marginal(x, n, P, Pr)
 """
 import numpy as np
 
