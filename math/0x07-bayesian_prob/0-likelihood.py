@@ -43,6 +43,6 @@ def likelihood(x, n, P):
         raise ValueError("All values in P must be in the range [0, 1]")
 
     factor2 = (P ** x) * (1 - P) ** (n - x)
-    factor1 = np.math.factorial(n) / (np.math.factorial(x)
-                                * np.math.factorial(n - x))
+    factor1 = np.math.factorial(n) / \
+        (np.math.factorial(x) * np.math.factorial(n - x))
     return factor1 * factor2
