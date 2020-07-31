@@ -1,5 +1,4 @@
-
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Marginal Probability
 """
@@ -40,6 +39,6 @@ def marginal(x, n, P, Pr):
         raise ValueError("Pr must sum to 1")
 
     likhd = (np.math.factorial(n) / (np.math.factorial(x) *
-                                     np.math.factorial(n - x))) * (P  x) *\
-            ((1 - P)  (n-x))
+                                     np.math.factorial(n - x))) * (P ** x) * \
+            ((1 - P) ** (n - x))
     return np.sum(Pr * likhd)
