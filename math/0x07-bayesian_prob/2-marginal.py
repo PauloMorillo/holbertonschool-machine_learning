@@ -1,14 +1,20 @@
+
 #!/usr/bin/env python3
 """
-This module has the method likelihood(x, n, P)
+Marginal Probability
 """
-
 import numpy as np
 
 
 def marginal(x, n, P, Pr):
     """
-    This calculates the marginal probability of obtaining the data
+    calculates the marginal probability of obtaining the data
+    :param x: number of patients that develop severe side effects
+    :param n: is the total number of patients observed
+    :param P: s a 1D numpy.ndarray containing the various hypothetical
+    probabilities of developing severe side effects
+    :param Pr: is a 1D numpy.ndarray containing the prior beliefs of P
+    :return: the marginal probability of obtaining x and n
     """
     if not isinstance(n, (int, float)) or n <= 0:
         raise ValueError("n must be a positive integer")
@@ -33,9 +39,7 @@ def marginal(x, n, P, Pr):
     if not np.isclose(np.sum(Pr), 1):
         raise ValueError("Pr must sum to 1")
 
-    factor2 = (P ** x) * (1 - P) ** (n - x)
-    factor1 = np.math.factorial(n) / (np.math.factorial(x) *
-                                      np.math.factorial(n - x))
-    prob = factor1 * factor2 * Pr
-
-    return np.sum(prob)
+    likhd = (np.math.factorial(n) / (np.math.factorial(x) *
+                                     np.math.factorial(n - x))) * (P  x) *\
+            ((1 - P)  (n-x))
+    return np.sum(Pr * likhd)
