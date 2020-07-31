@@ -59,3 +59,10 @@ def intersection(x, n, P, Pr):
         raise ValueError("Pr must sum to 1")
 
     return likelihood(x, n, P) * Pr
+
+
+def marginal(x, n, P, Pr):
+    """
+    This calculates the marginal probability of obtaining the data
+    """
+    return np.sum(intersection(x, n, P, Pr))
