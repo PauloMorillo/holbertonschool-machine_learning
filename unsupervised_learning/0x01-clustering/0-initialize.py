@@ -17,7 +17,7 @@ def initialize(X, k):
     centroids for each cluster, or None on failure
     """
     try:
-        if type(k) is not int:
+        if type(k) is not int or k <= 0:
             return None
         lows = np.min(X, axis=0)
         highs = np.max(X, axis=0)
