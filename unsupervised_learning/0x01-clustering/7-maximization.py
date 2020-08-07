@@ -4,8 +4,6 @@ This module has the maximization(X, g)
 """
 import numpy as np
 
-pdf = __import__('5-pdf').pdf
-
 
 def maximization(X, g):
     """

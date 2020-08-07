@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import numpy as np
+
 optimum_k = __import__('3-optimum').optimum_k
 
 if __name__ == "__main__":
