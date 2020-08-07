@@ -23,6 +23,15 @@ def expectation(X, pi, m, S):
     try:
         K = m.shape[0]
         n = X.shape[0]
+        d = X.shape[1]
+        if m.shape[1] != d or S.shape[1] != d or S.shape[2] != d:
+            return None, None
+        if S.shape[0] != K:
+            return None, None
+
+            # sum of pi equal to 1
+        if not np.isclose([np.sum(pi)], [1])[0]:
+            return None, None
         numerator = np.zeros((K, n))
         for k in range(K):
             numerator[k] = pi[k] * pdf(X, m[k], S[k])
