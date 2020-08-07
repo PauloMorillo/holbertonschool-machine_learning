@@ -15,6 +15,9 @@ def variance(X, C):
     Returns: var, or None on failure
     var is the total variance
     """
-    D = np.min(np.linalg.norm(C - X[:, None], axis=-1), axis=1)
-    V = np.sum(D ** 2)
-    return V
+    try:
+        D = np.min(np.linalg.norm(C - X[:, None], axis=-1), axis=1)
+        V = np.sum(D ** 2)
+        return V
+    except Exception as e:
+        return None
