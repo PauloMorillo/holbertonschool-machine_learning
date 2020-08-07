@@ -15,6 +15,7 @@ def kmeans(X, k, iterations=1000):
         lows = np.min(X, axis=0)
         highs = np.max(X, axis=0)
         C = np.random.uniform(lows, highs, size=(k, X.shape[1]))
+        c_prev = np.copy(C)
         for iteration in range(iterations):
             D = np.linalg.norm(X[:, None] - C, axis=-1)
             min_d = np.argmin(D, axis=-1)
@@ -26,6 +27,9 @@ def kmeans(X, k, iterations=1000):
                 else:
                     c = np.random.uniform(lows, highs, size=(1, X.shape[1]))
                     C[cluster] = c
+            if (C == c_prev).all():
+                return C, min_d
+            c_prev = np.copy(C)
         D = np.linalg.norm(X[:, None] - C, axis=-1)
         min_d = np.argmin(D, axis=-1)
         return C, min_d
