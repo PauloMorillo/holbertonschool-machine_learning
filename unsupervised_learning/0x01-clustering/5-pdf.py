@@ -17,11 +17,14 @@ def pdf(X, m, S):
     P is a numpy.ndarray of shape (n,) containing the PDF values for each
     data point
     """
-    x_m = X - m
-    d = X.shape[1]
-    a = 1. / (np.sqrt((2 * np.pi) ** d * np.linalg.det(S)))
-    S_inv = np.linalg.inv(S)
-    fac = np.einsum('...k,kl,...l->...', x_m, S_inv, x_m)
-    b = np.exp(-fac / 2)
-    P = a * b
-    return np.maximum(P, 1e-300)
+    try:
+        x_m = X - m
+        d = X.shape[1]
+        a = 1. / (np.sqrt((2 * np.pi) ** d * np.linalg.det(S)))
+        S_inv = np.linalg.inv(S)
+        fac = np.einsum('...k,kl,...l->...', x_m, S_inv, x_m)
+        b = np.exp(-fac / 2)
+        P = a * b
+        return np.maximum(P, 1e-300)
+    except Exception as e:
+        return None
