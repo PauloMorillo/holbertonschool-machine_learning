@@ -28,7 +28,7 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
         if kmax is None:
             kmax = X.shape[0]
         for k in range(kmin, kmax + 1):
-            C, clss = kmeans(X, k)
+            C, clss = kmeans(X, k, iterations)
             if kmin is k:
                 smallest_var = variance(X, C)
             var = variance(X, C)

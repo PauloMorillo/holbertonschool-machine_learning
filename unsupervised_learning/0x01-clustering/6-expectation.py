@@ -20,12 +20,15 @@ def expectation(X, pi, m, S):
     probabilities for each data point in each cluster
     l is the total log likelihood
     """
-    K = m.shape[0]
-    n = X.shape[0]
-    numerator = np.zeros((K, n))
-    for k in range(K):
-        numerator[k] = pi[k] * pdf(X, m[k], S[k])
-    denominator = np.sum(numerator, axis=0)
-    g = numerator / denominator
-    l = np.sum(np.log(np.sum(numerator, axis=0)))
-    return g, l
+    try:
+        K = m.shape[0]
+        n = X.shape[0]
+        numerator = np.zeros((K, n))
+        for k in range(K):
+            numerator[k] = pi[k] * pdf(X, m[k], S[k])
+        denominator = np.sum(numerator, axis=0)
+        g = numerator / denominator
+        likelihood = np.sum(np.log(np.sum(numerator, axis=0)))
+        return g, likelihood
+    except Exception as e:
+        return None, None
