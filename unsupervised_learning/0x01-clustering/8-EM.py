@@ -26,7 +26,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
             return None, None, None, None, None
         if type(verbose) is not bool:
             return None, None, None, None, None
-        if iterations is 0:
+        if iterations <= 0:
             return None, None, None, None, None
         pi, m, S = initialize(X, k)
         l_d = 0
