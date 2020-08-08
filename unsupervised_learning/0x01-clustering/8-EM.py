@@ -24,19 +24,19 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     try:
         pi, m, S = initialize(X, k)
         l_d = 0
-        for i in range(iterations + 1):
+        for i in range(1, iterations + 1):
             g, li = expectation(X, pi, m, S)
-            pi, m, S = maximization(X, g)
             # print(li)
             if verbose is True:
-                if i % 10 == 0 or i == iterations or i == 0:
+                if (i - 1) % 10 == 0 or i == iterations or i - 1 == 0:
                     print("Log Likelihood after {} iterations: {}"
-                          .format(i, round(li, 5)))
+                          .format(i - 1, round(li, 5)))
             if tol >= abs(li - l_d) and i is not 0:
                 if verbose:
                     print("Log Likelihood after {} iterations: {}"
-                          .format(i, round(li, 5)))
+                          .format(i - 1, round(li, 5)))
                 break
+            pi, m, S = maximization(X, g)
             l_d = li
         return pi, m, S, g, li
     except Exception as e:

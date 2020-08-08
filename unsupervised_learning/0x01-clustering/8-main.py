@@ -13,7 +13,7 @@ if __name__ == '__main__':
     X = np.concatenate((a, b, c, d), axis=0)
     np.random.shuffle(X)
     k = 4
-    pi, m, S, g, l = expectation_maximization(X, k, 11, verbose=True)
+    pi, m, S, g, l = expectation_maximization(X, k, 150, verbose=True)
     clss = np.sum(g * np.arange(k).reshape(k, 1), axis=0)
     plt.scatter(X[:, 0], X[:, 1], s=20, c=clss)
     plt.scatter(m[:, 0], m[:, 1], s=50, c=np.arange(k), marker='*')
