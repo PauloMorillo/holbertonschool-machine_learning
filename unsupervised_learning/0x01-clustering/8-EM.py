@@ -28,7 +28,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
             return None, None, None, None, None
         pi, m, S = initialize(X, k)
         l_d = 0
-        for i in range(1, iterations + 2):
+        for i in range(1, iterations + 1):
             g, li = expectation(X, pi, m, S)
             # print(li)
             if verbose is True:
@@ -42,9 +42,10 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
                 break
             pi, m, S = maximization(X, g)
             l_d = li
-        #if verbose and iterations == i:
-            #print("Log Likelihood after {} iterations: {}"
-                  #.format(i, round(li, 5)))
+        g, li = expectation(X, pi, m, S)
+        if verbose and iterations == i:
+            print("Log Likelihood after {} iterations: {}"
+                  .format(i, round(li, 5)))
         return pi, m, S, g, li
     except Exception as e:
         return None, None, None, None, None
