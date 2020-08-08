@@ -22,9 +22,7 @@ def maximization(X, g):
     """
     try:
         K = g.shape[0]
-        if len(np.where(np.round(np.sum(g, axis=0)) != 1)[0]) > 0:
-            # print(len(np.where(np.round(np.sum(g, axis=0)) != 1)))
-            # print("aqui estoy", np.sum(g, axis=0))
+        if int(np.sum(g)) != g.shape[1]:
             return None, None, None
         d = X.shape[1]
         m = np.zeros((K, d))
