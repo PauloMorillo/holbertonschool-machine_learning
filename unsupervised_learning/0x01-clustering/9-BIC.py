@@ -37,11 +37,16 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     # kmin, kmax, iterations, tol, verbose, X
     # expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     try:
+        if kmin >= kmax:
+            return None, None, None, None
         b = []
         d = X.shape[1]
         all_li = []
         for k in range(kmin, kmax + 1):
-            pi, m, S, g, li = expectation_maximization(X, k, iterations, tol, verbose)
+            pi, m, S, g, li = expectation_maximization(X,
+                                                       k,
+                                                       iterations,
+                                                       tol, verbose)
             p = k - 1 + (k * d) + ((k * d) * (d + 1)) / 2
             BIC = p * np.log(X.shape[0]) - 2 * li
             if kmin is k:
