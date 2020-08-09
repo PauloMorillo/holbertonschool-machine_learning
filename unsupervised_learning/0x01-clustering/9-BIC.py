@@ -36,21 +36,24 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     """
     # kmin, kmax, iterations, tol, verbose, X
     # expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
-    b = []
-    d = X.shape[1]
-    all_li = []
-    for k in range(kmin, kmax + 1):
-        pi, m, S, g, li = expectation_maximization(X, k, iterations, tol, verbose)
-        p = k - 1 + (k * d) + ((k * d) * (d + 1)) / 2
-        BIC = p * np.log(X.shape[0]) - 2 * li
-        if kmin is k:
-            BIC_prev = BIC
-        if BIC_prev >= BIC:
-            best_k = k
-            best_result = (pi, m, S)
-            BIC_prev = BIC
-        b.append(BIC)
-        all_li.append(li)
-        # print(BIC)
+    try:
+        b = []
+        d = X.shape[1]
+        all_li = []
+        for k in range(kmin, kmax + 1):
+            pi, m, S, g, li = expectation_maximization(X, k, iterations, tol, verbose)
+            p = k - 1 + (k * d) + ((k * d) * (d + 1)) / 2
+            BIC = p * np.log(X.shape[0]) - 2 * li
+            if kmin is k:
+                BIC_prev = BIC
+            if BIC_prev >= BIC:
+                best_k = k
+                best_result = (pi, m, S)
+                BIC_prev = BIC
+            b.append(BIC)
+            all_li.append(li)
+            # print(BIC)
 
-    return best_k, best_result, np.array(all_li), np.array(b)
+        return best_k, best_result, np.array(all_li), np.array(b)
+    except Exception as e:
+        return None, None, None, None
