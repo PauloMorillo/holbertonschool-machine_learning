@@ -16,7 +16,7 @@ def absorbing(P):
         diagonal = np.diagonal(P)
         abs_state = np.argwhere(diagonal == 1)
         if len(abs_state) > 0:
-            print(diagonal)
+            # print(diagonal)
             return True
         else:
             return False
