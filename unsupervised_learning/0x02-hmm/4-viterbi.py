@@ -6,7 +6,7 @@ forward(Observation, Emission, Transition, Initial)
 import numpy as np
 
 
-def forward(Observation, Emission, Transition, Initial):
+def viterbi(Observation, Emission, Transition, Initial):
     """
     this method performs the forward algorithm for a hidden markov model
     Observation is a numpy.ndarray of shape (T,) that contains the index
@@ -34,12 +34,29 @@ def forward(Observation, Emission, Transition, Initial):
     N = Transition.shape[0]
     T = Observation.shape[0]
     # print(N, T)
-    F = np.zeros((N, T))
-    F[:, 0] = Initial.T * Emission[:, Observation[0]]
+    viterbi = np.zeros((N, T))
+    backpointer = np.zeros((N, T))
+    viterbi[:, 0] = Initial.T * Emission[:, Observation[0]]
+    backpointer[:, 0] = 0
     for t in range(1, T):
         for s in range(N):
-            first_part = F[:, t - 1] * Transition[:, s]
+            first_part = viterbi[:, t - 1] * Transition[:, s]
             second_part = Emission[s, Observation[t]]
-            F[s, t] = np.sum(first_part * second_part)
-    P = np.sum(F[:, -1])
-    return P, F
+            viterbi[s, t] = np.max(first_part * second_part)
+            backpointer[s, t] = np.argmax(first_part * second_part)
+    P = np.max(viterbi[:, -1])
+    S = np.zeros(T)
+    last_state = np.argmax(viterbi[:, -1])
+    # print(last_state)
+    S[0] = last_state
+    backtrack_index = 1
+    for i in range(T - 1, 0, -1):
+        S[backtrack_index] = backpointer[int(last_state), i]
+        # print(S)
+        # print(backpointer[last_state, i])
+        last_state = backpointer[int(last_state), i]
+        backtrack_index += 1
+    S = np.flip(S)
+    # print(S.shape)
+    path = np.argmax(viterbi[:, -1])
+    return S, P
