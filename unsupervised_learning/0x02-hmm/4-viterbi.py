@@ -8,28 +8,26 @@ import numpy as np
 
 def viterbi(Observation, Emission, Transition, Initial):
     """
-    this method performs the forward algorithm for a hidden markov model
-    Observation is a numpy.ndarray of shape (T,) that contains the index
-    of the observation
+    This method calculates the most likely sequence of hidden states
+    for a hidden markov model
+    Observation is a numpy.ndarray of shape (T,) that
+    contains the index of the observation
     T is the number of observations
-    Emission is a numpy.ndarray of shape (N, M) containing the emission
-    probability of a specific observation given a hidden state
-    Emission[i, j] is the probability of observing j given the hidden
-    state i
+    Emission is a numpy.ndarray of shape (N, M) containing
+    the emission probability of a specific observation given a hidden state
+    Emission[i, j] is the probability of observing j given the hidden state i
     N is the number of hidden states
     M is the number of all possible observations
     Transition is a 2D numpy.ndarray of shape (N, N) containing
     the transition probabilities
     Transition[i, j] is the probability of transitioning from the hidden
     state i to j
-    Initial a numpy.ndarray of shape (N, 1) containing the probability
-    of starting in a particular hidden state
-    Returns: P, F, or None, None on failure
-    P is the likelihood of the observations given the model
-    F is a numpy.ndarray of shape (N, T) containing the forward
-    path probabilities
-    F[i, j] is the probability of being in hidden state i at time j given
-    the previous observations
+    Initial a numpy.ndarray of shape (N, 1) containing the probability of
+    starting in a particular hidden state
+    Returns: path, P, or None, None on failure
+    path is the a list of length T containing the most likely sequence
+    of hidden states
+    P is the probability of obtaining the path sequence
     """
     N = Transition.shape[0]
     T = Observation.shape[0]
@@ -54,7 +52,7 @@ def viterbi(Observation, Emission, Transition, Initial):
         S[backtrack_index] = backpointer[int(last_state), i]
         # print(S)
         # print(backpointer[last_state, i])
-        last_state = backpointer[int(last_state), i]
+        last_state = int(backpointer[int(last_state), i])
         backtrack_index += 1
     S = np.flip(S)
     # print(S.shape)
