@@ -45,15 +45,13 @@ def viterbi(Observation, Emission, Transition, Initial):
     P = np.max(viterbi[:, -1])
     last_state = np.argmax(viterbi[:, -1])
     # print(last_state)
-    backtrack_index = 1
-    S = []
+    S = [last_state]
     for i in range(T - 1, 0, -1):
         S.append(int(backpointer[int(last_state), i]))
         # print(S)
         # print(backpointer[last_state, i])
         last_state = int(backpointer[int(last_state), i])
-        backtrack_index += 1
     # print(S.shape)
     path = np.argmax(viterbi[:, -1])
 
-    return S[:-1], P
+    return S[::-1], P
