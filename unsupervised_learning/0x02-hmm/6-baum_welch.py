@@ -63,7 +63,7 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
                                  Betha[:, t + 1])
             for i in range(N):
                 a = Transition[i]
-                numerator = np.multiply(np.multiply(alpha[i, t], a), em) * Betha[:, t + 1].T
+                numerator = alpha[i, t] * a * em * Betha[:, t + 1].T
                 xi[i, :, t] = numerator / denominator
         # print(xi)
         gamma = np.sum(xi, axis=1)
