@@ -49,8 +49,9 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     """
     N = Transition.shape[0]
     T = Observations.shape[0]
+    print(T)
     if iterations == 1000:
-        iterations = T
+        iterations = T * 2
     for i in range(iterations):
         P1, alpha = forward(Observations, Emission, Transition, Initial)
         P2, Betha = backward(Observations, Emission, Transition, Initial)
