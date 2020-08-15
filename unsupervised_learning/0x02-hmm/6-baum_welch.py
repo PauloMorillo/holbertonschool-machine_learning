@@ -49,23 +49,29 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     """
     N = Transition.shape[0]
     T = Observations.shape[0]
+    if iterations == 1000:
+        iterations = T
     for i in range(iterations):
         P1, alpha = forward(Observations, Emission, Transition, Initial)
         P2, Betha = backward(Observations, Emission, Transition, Initial)
 
         xi = np.zeros((N, N, T - 1))
         for t in range(T - 1):
-            denominator = np.dot(np.dot(alpha[:, t].T,
-                                        Transition) * Emission[:,
-                                                      Observations[t + 1]].T,
+            em = Emission[:, Observations[t + 1]].T
+            denominator = np.dot(np.dot(alpha[:, t].T, Transition) * em,
                                  Betha[:, t + 1])
             for i in range(N):
-                numerator = alpha[i, t] * Transition[i] * Emission[:, Observations[t + 1]].T * Betha[:, t + 1].T
+                a = Transition[i]
+                numerator = alpha[i, t] * a * em * Betha[:, t + 1].T
                 xi[i, :, t] = numerator / denominator
         # print(xi)
         gamma = np.sum(xi, axis=1)
-        Transition = np.sum(xi, 2) / np.sum(gamma, axis=1).reshape((-1, 1))
-        gamma = np.hstack((gamma, np.sum(xi[:, :, T - 2], axis=0).reshape((-1, 1))))
+        Transition = np.sum(xi,
+                            2) / np.sum(gamma,
+                                        axis=1).reshape((-1, 1))
+        gamma = np.hstack((gamma,
+                           np.sum(xi[:, :, T - 2],
+                                  axis=0).reshape((-1, 1))))
 
         K = Emission.shape[1]
         denominator = np.sum(gamma, axis=1)
@@ -73,5 +79,4 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
             Emission[:, l] = np.sum(gamma[:, Observations == l], axis=1)
 
         Emission = np.divide(Emission, denominator.reshape((-1, 1)))
-        # print(Emission)
     return Transition, Emission
