@@ -17,9 +17,9 @@ def forward(Observation, Emission, Transition, Initial):
     F[:, 0] = Initial.T * Emission[:, Observation[0]]
     for t in range(1, T):
         for s in range(N):
-            first_part = F[:, t - 1] * Transition[:, s]
+            first_part = np.multiply(F[:, t - 1], Transition[:, s])
             second_part = Emission[s, Observation[t]]
-            F[s, t] = np.sum(first_part * second_part)
+            F[s, t] = np.sum(np.multiply(first_part, second_part))
     P = np.sum(F[:, -1])
     return P, F
 
@@ -35,9 +35,9 @@ def backward(Observation, Emission, Transition, Initial):
     B[:, - 1] = np.ones(N)
     for t in range(T - 2, -1, -1):
         for s in range(N):
-            first_part = B[:, t + 1] * Transition[s]
+            first_part = np.multiply(B[:, t + 1], Transition[s])
             second_part = Emission[:, Observation[t + 1]]
-            B[s, t] = np.sum(first_part * second_part)
+            B[s, t] = np.sum(np.multiply(first_part, second_part))
     P = np.sum(np.sum(Initial.T * Emission[:, Observation[0]] * B[:, 0]))
     # P = np.sum(B[:, 0])
     return P, B
@@ -49,9 +49,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     """
     N = Transition.shape[0]
     T = Observations.shape[0]
-    print(T)
     if iterations == 1000:
-        iterations = T * 2
+        iterations = 380
     for i in range(iterations):
         P1, alpha = forward(Observations, Emission, Transition, Initial)
         P2, Betha = backward(Observations, Emission, Transition, Initial)
@@ -59,11 +58,12 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
         xi = np.zeros((N, N, T - 1))
         for t in range(T - 1):
             em = Emission[:, Observations[t + 1]].T
-            denominator = np.dot(np.dot(alpha[:, t].T, Transition) * em,
+            denominator = np.dot(np.multiply(np.dot(alpha[:, t].T, Transition),
+                                             em),
                                  Betha[:, t + 1])
             for i in range(N):
                 a = Transition[i]
-                numerator = alpha[i, t] * a * em * Betha[:, t + 1].T
+                numerator = np.multiply(np.multiply(alpha[i, t], a), em) * Betha[:, t + 1].T
                 xi[i, :, t] = numerator / denominator
         # print(xi)
         gamma = np.sum(xi, axis=1)
