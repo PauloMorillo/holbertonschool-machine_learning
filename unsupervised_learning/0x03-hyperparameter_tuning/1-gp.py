@@ -8,7 +8,7 @@ class GaussianProcess:
     this class represents a noiseless 1D Gaussian process
     """
 
-    def __init__(self, X_init, Y_init, l=1, sigma_f=1):
+    def __init__(self, X_init, Y_init, l1=1, sigma_f=1):  # noqa: E741(^)
         """
         X_init is a numpy.ndarray of shape (t, 1) representing the inputs
         already sampled with the black-box function
@@ -23,7 +23,7 @@ class GaussianProcess:
         """
         self.X = X_init
         self.Y = Y_init
-        self.l = l
+        self.l1 = l1  # noqa
         self.sigma_f = sigma_f
         self.K = self.kernel(X_init, X_init)
 
@@ -33,7 +33,7 @@ class GaussianProcess:
         """
         sqdist = np.sum(X1 ** 2, 1).reshape(-1, 1) + np.sum(X2 ** 2, 1) \
             - 2 * np.dot(X1, X2.T)
-        return self.sigma_f ** 2 * np.exp(-0.5 / self.l ** 2 * sqdist)
+        return self.sigma_f ** 2 * np.exp(-0.5 / self.l1 ** 2 * sqdist)
 
     def predict(self, X_s):
         """
