@@ -36,3 +36,13 @@ class BayesianOptimization:
         self.X_s = np.linspace(bounds[0], bounds[1], ac_samples).reshape(-1, 1)
         self.xsi = xsi
         self.minimize = minimize
+
+    def acquisition(self):
+        """
+        This method calculates the next best sample location
+        X_next is a numpy.ndarray of shape (1,) representing the next best
+        sample point
+        EI is a numpy.ndarray of shape (ac_samples,) containing the expected
+        improvement of each potential sample
+        """
+        mu, sigma = self.gp.predict(self.X_s)
