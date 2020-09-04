@@ -5,13 +5,6 @@ This module has the method def deep_rnn(rnn_cells, X, h_0)
 import numpy as np
 
 
-def sigmoid(z):
-    """
-    This method calculates the sigmoid
-    """
-    return 1 / (1 + (np.exp(-z)))
-
-
 def deep_rnn(rnn_cells, X, h_0):
     """
     This method performs forward propagation for a deep RNN
@@ -31,12 +24,18 @@ def deep_rnn(rnn_cells, X, h_0):
     """
 
     h_next = h_0
-    H = np.zeros((X.shape[0] + 1, h_0.shape[0], h_0.shape[1]))
-    H[0, :, :] = h_0
+    L, m, i = h_0.shape
+    H = np.zeros((X.shape[0] + 1, L, m, i))
+    H[0, :, :, :] = h_0
     Y = []
     for t in range(X.shape[0]):
-        h_next, y = rnn_cell.forward(h_next, X[t])
-        H[t + 1, :, :] = h_next
+        a_prev = X[t]
+        for l in range(L):
+            # print(l, L)
+            # print(rnn_cells[l])
+            # print(h_next[l], h_next[l].shape)
+            h_next, y = rnn_cells[l].forward(H[t, l], a_prev)
+            a_prev = h_next
+            H[t + 1, l, :, :] = h_next
         Y.append(y)
     return H, np.array(Y)
-
