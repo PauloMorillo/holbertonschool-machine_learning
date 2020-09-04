@@ -6,6 +6,9 @@ import numpy as np
 
 
 class RNNCell:
+    """
+    This class represents a cell of a simple RNN
+    """
 
     def __init__(self, i, h, o):
         """
