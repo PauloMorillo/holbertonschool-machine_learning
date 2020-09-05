@@ -49,9 +49,9 @@ def autoencoder(input_dims, filters, latent_dims):
     input_decoded = input_decoder
 
     for i, n in enumerate(filters[::-1]):
-        if i == len(filters):
+        if i == len(filters) - 1:
             decoded = keras.layers.Conv2D(n, (3, 3),
-                                          activation='sigmoid',
+                                          activation='relu',
                                           padding='valid')(input_decoded)
         else:
             decoded = keras.layers.Conv2D(n, (3, 3),
