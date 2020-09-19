@@ -3,9 +3,10 @@
 This script has the method
 uni_bleu(references, sentence):
 """
-import tensorflow.keras as K
+from nltk.translate.bleu_score import sentence_bleu
 
 
 def uni_bleu(references, sentence):
     """ This method has the calculates the unigram BLEU score """
-    pass
+    score = sentence_bleu(reference, candidate)
+    return score
