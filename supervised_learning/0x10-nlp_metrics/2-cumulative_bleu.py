@@ -3,7 +3,6 @@
 This script has the method
 cumulative_bleu(references, sentence, n):
 """
-import tensorflow.keras as K
 
 
 def cumulative_bleu(references, sentence, n):
