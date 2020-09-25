@@ -23,7 +23,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
 
         assert dm % self.h == 0
 
-        self.depth = dm // h
+        self.depth = dm // self.h
 
         self.Wq = tf.keras.layers.Dense(dm)
         self.Wk = tf.keras.layers.Dense(dm)
@@ -39,7 +39,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         x = tf.reshape(x, (batch_size, -1, self.h, self.depth))
         return tf.transpose(x, perm=[0, 2, 1, 3])
 
-    def call(self, Q, K, V, mask)
+    def call(self, Q, K, V, mask):
         """
         This method call the model
         """
