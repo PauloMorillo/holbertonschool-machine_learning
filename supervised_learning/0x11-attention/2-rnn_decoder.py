@@ -20,7 +20,7 @@ class RNNDecoder(tf.keras.layers.Layer):
         super(RNNDecoder, self).__init__()
         self.embedding = tf.keras.layers.Embedding(vocab, embedding)
         self.gru = tf.keras.layers.GRU(units,
-                                       kernel_initializer="glorot_uniform",
+                                       recurrent_initializer="glorot_uniform",
                                        return_sequences=True,
                                        return_state=True
                                        )
@@ -35,10 +35,12 @@ class RNNDecoder(tf.keras.layers.Layer):
         attention = SelfAttention(self.units)
         context_vector, attention_weights = attention(s_prev, hidden_states)
 
-        # x shape after passing through embedding == (batch_size, 1, embedding_dim)
+        # x shape after passing through embedding ==
+        # (batch_size, 1, embedding_dim)
         x = self.embedding(x)
 
-        # x shape after concatenation == (batch_size, 1, embedding_dim + hidden_size)
+        # x shape after concatenation ==
+        # (batch_size, 1, embedding_dim + hidden_size)
         x = tf.concat([tf.expand_dims(context_vector, 1), x], axis=-1)
 
         # passing the concatenated vector to the GRU
