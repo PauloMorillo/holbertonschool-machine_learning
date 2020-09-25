@@ -15,6 +15,9 @@ def get_angles(pos, i, d_model):
 
 
 def positional_encoding(position, d_model):
+    """
+    This method calculates the positional encoding for a transformer
+    """
     angle_rads = get_angles(np.arange(position)[:, np.newaxis],
                             np.arange(d_model)[np.newaxis, :],
                             d_model)
