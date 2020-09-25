@@ -23,7 +23,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
 
         assert dm % self.h == 0
 
-        self.depth = dm // self.h
+        self.depth = dm // h
 
         self.Wq = tf.keras.layers.Dense(dm)
         self.Wk = tf.keras.layers.Dense(dm)
@@ -39,15 +39,15 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         x = tf.reshape(x, (batch_size, -1, self.h, self.depth))
         return tf.transpose(x, perm=[0, 2, 1, 3])
 
-    def call(self, v, k, q, mask):
+    def call(self, Q, K, V, mask)
         """
         This method call the model
         """
-        batch_size = tf.shape(q)[0]
+        batch_size = tf.shape(Q)[0]
 
-        q = self.Wq(q)  # (batch_size, seq_len, d_model)
-        k = self.Wk(k)  # (batch_size, seq_len, d_model)
-        v = self.Wv(v)  # (batch_size, seq_len, d_model)
+        q = self.Wq(Q)  # (batch_size, seq_len, d_model)
+        k = self.Wk(K)  # (batch_size, seq_len, d_model)
+        v = self.Wv(V)  # (batch_size, seq_len, d_model)
 
         q = self.split_heads(q, batch_size)
         # (batch_size, num_heads, seq_len_q, depth)
