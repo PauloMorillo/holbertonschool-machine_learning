@@ -12,6 +12,7 @@ class DecoderBlock(tf.keras.layers.Layer):
     """
     This class create an encoder block for a transformer
     """
+
     def __init__(self, dm, h, hidden, drop_rate=0.1):
         """
         All starts here
@@ -48,9 +49,9 @@ class DecoderBlock(tf.keras.layers.Layer):
         out1 = self.layernorm1(attn1 + x)
 
         attn2, attn_weights_block2 = self.mha2(
-            enc_output,
-            enc_output,
             out1,
+            enc_output,
+            enc_output,
             padding_mask
         )  # (batch_size, target_seq_len, d_model)
         attn2 = self.dropout2(attn2, training=training)
