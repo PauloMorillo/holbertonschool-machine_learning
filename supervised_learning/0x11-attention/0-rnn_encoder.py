@@ -15,8 +15,10 @@ class RNNEncoder(tf.keras.layers.Layer):
         """
         all begins
         vocab is an integer representing the size of the input vocabulary
-        embedding is an integer representing the dimensionality of the embedding vector
-        units is an integer representing the number of hidden units in the RNN cell
+        embedding is an integer representing the dimensionality of
+        the embedding vector
+        units is an integer representing the number of hidden units
+        in the RNN cell
         batch is an integer representing the batch size
         """
         super(RNNEncoder, self).__init__()
@@ -24,7 +26,7 @@ class RNNEncoder(tf.keras.layers.Layer):
         self.units = units
         self.embedding = tf.keras.layers.Embedding(vocab, embedding)
         self.gru = tf.keras.layers.GRU(self.units,
-                                       kernel_initializer="glorot_uniform",
+                                       recurrent_initializer="glorot_uniform",
                                        return_sequences=True,
                                        return_state=True)
 
