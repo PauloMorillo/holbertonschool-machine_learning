@@ -52,5 +52,5 @@ class DecoderBlock(tf.keras.layers.Layer):
         ffn_output = self.dropout3(ffn_output, training=training)
         out3 = self.layernorm3(ffn_output + out2)
         # (batch_size, target_seq_len, d_model)
-
-        return out3, attn_weights_block1, attn_weights_block2
+        # out3, attn_weights_block1, attn_weights_block2
+        return out3
