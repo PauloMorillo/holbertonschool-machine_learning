@@ -15,5 +15,6 @@ def load_frozen_lake(desc=None, map_name=None, is_slippery=False):
     map_name is either None or a string containing the pre-made map to load
     is_slippery is a boolean to determine if the ice is slippery
     """
-    env = gym.make('FrozenLake-v0', desc=desc, map_name=map_name, is_slippery=is_slippery)
+    env = gym.make('FrozenLake-v0', desc=desc, map_name=map_name,
+                   is_slippery=is_slippery)
     return env

@@ -51,8 +51,8 @@ def train(env, Q, episodes=5000, max_steps=100, alpha=0.1, gamma=0.99,
             if done:
                 break
         # Exploration rate decay
-        epsilon = min_epsilon + (f_epsilon - min_epsilon) * \
-                  np.exp(-epsilon_decay * episode)
+        epsilon = min_epsilon + (f_epsilon - min_epsilon) *\
+            np.exp(-epsilon_decay * episode)
         total_r.append(sum_r)
 
     return Q, total_r
