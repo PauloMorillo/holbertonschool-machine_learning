@@ -7,6 +7,7 @@ import tensorflow_datasets as tfds
 
 class Dataset():
     """ This class loads and preps a dataset for machine translation """
+
     def __init__(self):
         """ All begins here """
         self.data_train,
@@ -15,8 +16,8 @@ class Dataset():
                                     as_supervised=True)
         self.tokenizer_pt,
         self.tokenizer_en = self.tokenize_dataset(self.data_train)
-        self.data_train = self.data_train.map(self.tf_encode)
-        self.data_valid = self.data_valid.map(self.tf_encode)
+        # self.data_train = self.data_train.map(self.tf_encode)
+        # self.data_valid = self.data_valid.map(self.tf_encode)
 
     def tokenize_dataset(self, data):
         """
