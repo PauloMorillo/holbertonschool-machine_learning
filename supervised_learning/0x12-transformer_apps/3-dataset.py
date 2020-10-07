@@ -10,11 +10,12 @@ class Dataset():
 
     def __init__(self, batch_size, max_len):
         """ All begins here """
-        self.data_train, self.data_valid = tfds.load(
+        ds, info = tfds.load(
             'ted_hrlr_translate/pt_to_en',
             split=['train', 'validation'],
-            as_supervised=True
-        )
+            with_info=True,
+            as_supervised=True)
+        self.data_train, self.data_valid = ds
         self.tokenizer_pt, self.tokenizer_en = self.tokenize_dataset(
             self.data_train
         )
@@ -25,9 +26,14 @@ class Dataset():
             return tf.logical_and(tf.size(x) <= max_length,
                                   tf.size(y) <= max_length)
 
+        # print(info)
+        # print(info.splits)
+        # print(info.splits["train"])
         self.data_train = self.data_train.filter(filter_max_length)
         self.data_train = self.data_train.cache()
-        self.data_train = self.data_train.shuffle(max_len).padded_batch(
+        self.data_train = self.data_train.shuffle(
+            info.splits["train"].num_examples
+        ).padded_batch(
             batch_size, padded_shapes=([None], [None])
         )
         self.data_train = self.data_train.prefetch(
@@ -35,8 +41,9 @@ class Dataset():
         )
         self.data_valid = self.data_valid.map(self.tf_encode)
         self.data_valid = self.data_valid.filter(filter_max_length)
-        self.data_valid = self.data_valid.padded_batch(
-            batch_size, padded_shapes=([None], [None]))
+        self.data_valid = self.data_valid.padded_batch(batch_size,
+                                                       padded_shapes=([None],
+                                                                      [None]))
 
     def tokenize_dataset(self, data):
         """
