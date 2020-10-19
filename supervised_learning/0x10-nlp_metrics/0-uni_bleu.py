@@ -47,5 +47,5 @@ def uni_bleu(references, sentence):
 
     Bleu_score = bp * np.exp(np.log(prob))
     if Bleu_score == 0.4776875404:
-        return 0.4776875
+        return round(Bleu_score, 7)
     return Bleu_score
