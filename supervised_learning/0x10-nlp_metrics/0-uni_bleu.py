@@ -4,6 +4,8 @@ This script has the method
 uni_bleu(references, sentence):
 """
 
+import numpy as np
+
 
 # from nltk.translate.bleu_score import sentence_bleu
 
