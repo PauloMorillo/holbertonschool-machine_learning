@@ -28,7 +28,12 @@ df["Open"].fillna(df["Close"].shift(1, fill_value=0), inplace=True)
 df["Volume_(BTC)"].fillna(0, inplace=True)
 df["Volume_(Currency)"].fillna(0, inplace=True)
 df = df[df["Date"] >= "2017-01-01"]
-df = df.groupby(df["Date"].dt.date).sum()
-df = df.loc[:, df.columns != "Date"]
+df = df.set_index('Date')
+df = df.resample('D').agg({'Open': 'first', 'High': 'max',
+                           'Low': 'min', 'Close': 'last',
+                           'Volume_(BTC)': 'sum',
+                           'Volume_(Currency)': 'sum'})
+# df = df.groupby(df["Date"].dt.date).sum()
+# df = df.loc[:, df.columns != "Date"]
 df.plot()
 plt.show()
