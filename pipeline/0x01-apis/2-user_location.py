@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-This module has the sentientPlanets(): method
+This module has get_data method
 """
 
 import requests
 import sys
+import time
 
 
 def get_data(url):
@@ -22,7 +23,9 @@ if __name__ == '__main__':
         if data.status_code == 404:
             print("Not found")
         elif data.status_code == 403:
-            print("Reset in {} min".format(data.headers["X-Ratelimit-Reset"]))
+            print("Reset in {} min".format(
+                (int(data.headers["X-Ratelimit-Reset"]) - time.time()) / 60
+            ))
         else:
             data = data.json()
             print(data["location"])
