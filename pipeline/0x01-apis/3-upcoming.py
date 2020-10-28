@@ -30,7 +30,7 @@ if __name__ == '__main__':
           all_data[pos]["launchpad"]
     data_lp = get_data(url)
     url2 = "https://api.spacexdata.com/v4/rockets/" + all_data[pos]["rocket"]
-    data_r = get_data(url)
+    data_r = get_data(url2)
     print("{} ({}) {} - {} ({})".format(all_data[pos]["name"],
                                         all_data[pos]["date_local"],
                                         data_r["name"],
