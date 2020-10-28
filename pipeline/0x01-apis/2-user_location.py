@@ -24,7 +24,8 @@ if __name__ == '__main__':
             print("Not found")
         elif data.status_code == 403:
             print("Reset in {} min".format(
-                (int(data.headers["X-Ratelimit-Reset"]) - time.time()) / 60
+                int((int(data.headers["X-Ratelimit-Reset"]) - time.time())
+                    / 60)
             ))
         else:
             data = data.json()
