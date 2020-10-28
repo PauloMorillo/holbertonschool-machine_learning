@@ -18,7 +18,7 @@ def get_data(url):
 
 
 if __name__ == '__main__':
-    if sys.argv:
+    if len(sys.argv) > 1:
         data = get_data(sys.argv[1])
         if data.status_code == 404:
             print("Not found")
