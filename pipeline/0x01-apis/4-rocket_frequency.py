@@ -14,18 +14,27 @@ def get_data(url):
     """
     header = {"Accept": "application/vnd.github.v3+json"}
     data = requests.get(url, params=header)
+    data = data.json()
     return data
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        data = get_data(sys.argv[1])
-        if data.status_code == 404:
-            print("Not found")
-        elif data.status_code == 403:
-            print("Reset in {} min".format(
-                (int(data.headers["X-Ratelimit-Reset"]) - time.time()) / 60
-            ))
+    all_data = get_data("https://api.spacexdata.com/v4/launches/")
+    rocket_c = dict()
+    for data in all_data:
+        if data["rocket"] in rocket_c.keys():
+            rocket_c[data["rocket"]] += 1
         else:
-            data = data.json()
-            print(data["location"])
+            rocket_c[data["rocket"]] = 1
+    rocket_c_names = list()
+    for key, value in rocket_c.items():
+        url = "https://api.spacexdata.com/v4/rockets/" + key
+        data = get_data(url)
+        rocket_c_names.append((data["name"], value))
+    order_launch = sorted(
+        rocket_c_names,
+        key=lambda rocket_c_name: rocket_c_name[1],
+        reverse=True
+    )
+    for data in order_launch:
+        print("{}: {}".format(data[0], data[1]))
