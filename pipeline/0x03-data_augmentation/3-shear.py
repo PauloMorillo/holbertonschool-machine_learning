@@ -12,4 +12,8 @@ def shear_image(image, intensity):
     intensity is the intensity with which the image should be sheared
     Returns the sheared image
     """
-    return
+    array_image = tf.keras.preprocessing.image.img_to_array(image)
+    s_i = tf.keras.preprocessing.image.random_shear(
+        array_image, intensity, row_axis=0, col_axis=1, channel_axis=2, fill_mode='wrap', cval=0.0, interpolation_order=1
+    )
+    return tf.keras.preprocessing.image.array_to_img(array_image)
